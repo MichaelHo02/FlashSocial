@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.material.color.DynamicColors;
 import com.google.android.material.navigation.NavigationBarView;
 import com.michael.flashsocial.R;
 import com.michael.flashsocial.fragment.HomeFragment;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
 
         navigationInit();
     }

@@ -1,7 +1,5 @@
 package com.michael.flashsocial.adapter;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +22,11 @@ public class GroupItemAdapter extends RecyclerView.Adapter<GroupItemAdapter.Grou
         this.groupItemList = groupItemList;
     }
 
+    public void setData(List<GroupItem> newList) {
+        groupItemList = newList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public GroupItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,10 +39,10 @@ public class GroupItemAdapter extends RecyclerView.Adapter<GroupItemAdapter.Grou
     public void onBindViewHolder(@NonNull GroupItemHolder holder, int position) {
         GroupItem groupItem = groupItemList.get(position);
         if (groupItem == null) return;
-        holder.nameView.setText(groupItem.name);
-        holder.itemSizeView.setText(String.format("Number of item: %d", groupItem.itemSize));
-        int iconId = groupItem.isLearning ? R.drawable.ic_baseline_stop_24 : R.drawable.ic_baseline_play_arrow_24;
-        String actionText = groupItem.isLearning ? "Stop" : "Learn";
+        holder.nameView.setText(groupItem.getName());
+        holder.itemSizeView.setText(String.format("Number of item: %d", groupItem.getItemSize()));
+        int iconId = groupItem.getIsLearning() ? R.drawable.ic_baseline_stop_24 : R.drawable.ic_baseline_play_arrow_24;
+        String actionText = groupItem.getIsLearning() ? "Stop" : "Learn";
         holder.action.setIconResource(iconId);
         holder.action.setText(actionText);
     }
