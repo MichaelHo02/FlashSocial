@@ -1,4 +1,4 @@
-package com.michael.flashsocial;
+package com.michael.flashsocial.activity;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -6,18 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationBarView;
+import com.michael.flashsocial.R;
 import com.michael.flashsocial.fragment.HomeFragment;
 import com.michael.flashsocial.fragment.LearningFragment;
 import com.michael.flashsocial.fragment.StatFragment;
 
 public class MainActivity extends AppCompatActivity {
     private NavigationBarView nbv;
-    private HomeFragment homeFragment = new HomeFragment();
-    private LearningFragment learningFragment = new LearningFragment();
-    private StatFragment statFragment = new StatFragment();
+    private final HomeFragment homeFragment = HomeFragment.newInstance("a", "b");
+    private final LearningFragment learningFragment = LearningFragment.newInstance("a", "b");
+    private final StatFragment statFragment = StatFragment.newInstance("a", "b");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

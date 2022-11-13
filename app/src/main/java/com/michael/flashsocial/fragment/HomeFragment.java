@@ -1,16 +1,24 @@
 package com.michael.flashsocial.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.michael.flashsocial.R;
+import com.michael.flashsocial.activity.FolderCreationActivity;
 import com.michael.flashsocial.adapter.GroupItemAdapter;
 import com.michael.flashsocial.model.GroupItem;
 
@@ -34,6 +42,7 @@ public class HomeFragment extends Fragment {
     private String mParam2;
 
     private RecyclerView recyclerView;
+    private MaterialToolbar materialToolbar;
     private View view;
 
     private List<GroupItem> groupItemList;
@@ -51,6 +60,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -63,7 +73,31 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
         recycleViewInit();
+        materialToolbar = view.findViewById(R.id.frag_home_toolbar);
+        materialToolbar.inflateMenu(R.menu.fragment_home_menu);
+        materialToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.frag_home_add:
+                        return navigateAddFolder();
+                    case R.id.frag_home_setting:
+                        return navigateSetting();
+                }
+                return false;
+            }
+        });
         return view;
+    }
+
+    private boolean navigateAddFolder() {
+        Intent intent = new Intent(view.getContext(), FolderCreationActivity.class);
+        startActivityForResult(intent, 100);
+        return true;
+    }
+
+    private boolean navigateSetting() {
+        return true;
     }
 
     private void recycleViewInit() {
@@ -78,7 +112,7 @@ public class HomeFragment extends Fragment {
     private List<GroupItem> getGroupItemList() {
         List<GroupItem> list = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            list.add(new GroupItem("Name " + i));
+            list.add(new GroupItem("Name " + i, i, true));
         }
         return list;
     }
