@@ -12,12 +12,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
@@ -29,7 +30,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.michael.flashsocial.R;
 import com.michael.flashsocial.custom_rule.CycleRule;
 import com.michael.flashsocial.database.PersonDB;
-import com.michael.flashsocial.model.DataConverter;
+import com.michael.flashsocial.utils.DataConverter;
 import com.michael.flashsocial.model.Person;
 import com.michael.flashsocial.utils.NavigationUtil;
 import com.michael.flashsocial.utils.RequestSignal;
@@ -38,6 +39,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ItemCreationActivity extends AppCompatActivity implements CycleRule {
+    MaterialToolbar materialToolbar;
     private MaterialButton avtBtnUpload;
     private MaterialButton avtBtnTake;
     private MaterialButton submitBtn;
@@ -64,6 +66,7 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
 
     @Override
     public void initUI() {
+        materialToolbar = findViewById(R.id.act_item_creation_toolbar);
         avtBtnUpload = findViewById(R.id.act_item_creation_avt_btn_upload);
         avtBtnTake = findViewById(R.id.act_item_creation_avt_btn_take);
         submitBtn = findViewById(R.id.act_item_creation_submit_btn);
@@ -85,6 +88,7 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
 
     @Override
     public void initUIAction() {
+        materialToolbar.setNavigationOnClickListener(this::handleNavigation);
         avtBtnUpload.setOnClickListener(this::handleAvtBtnUpload);
         avtBtnTake.setOnClickListener(this::handleAvtBtnTake);
         submitBtn.setOnClickListener(this::handleSubmitBtn);
@@ -100,6 +104,10 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
 
     }
 
+    private void handleNavigation(View view) {
+        navigateBack(getIntent());
+    }
+
     private void handleSubmitBtn(View view) {
         try {
             String fName = firstNameInput.getText().toString();
@@ -107,7 +115,8 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
 //            Date dob = new SimpleDateFormat("MM/dd/yy").parse(dobInput.getText().toString());
             String role = roleInput.getText().toString();
             String uniqueFeature = uniqueFeatureInput.getText().toString();
-            Person person = new Person(fName, lname, DataConverter.convertImageToByteArr(bitmap), role, uniqueFeature);
+            byte[] avt = DataConverter.compressImage(DataConverter.convertImageToByteArr(bitmap));
+            Person person = new Person(fName, lname, avt, role, uniqueFeature);
             PersonDB.getInstance(this).itemDao().insertItem(person);
             NavigationUtil.hideSoftKeyboard(this);
             navigateBack(getIntent());

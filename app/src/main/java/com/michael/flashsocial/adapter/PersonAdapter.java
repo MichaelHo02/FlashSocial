@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 import com.michael.flashsocial.R;
-import com.michael.flashsocial.model.DataConverter;
+import com.michael.flashsocial.utils.DataConverter;
 import com.michael.flashsocial.model.Person;
 
 import java.util.List;

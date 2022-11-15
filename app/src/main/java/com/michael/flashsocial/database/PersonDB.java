@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.michael.flashsocial.dao.PersonDao;
 import com.michael.flashsocial.model.Person;
 
-@Database(entities = Person.class, version = 4, exportSchema = false)
+@Database(entities = {Person.class}, version = 4, exportSchema = false)
 public abstract class PersonDB extends RoomDatabase {
     private static final String DATABASE_NAME = "person.db";
     private static PersonDB instance;
