@@ -11,20 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.michael.flashsocial.R;
 import com.michael.flashsocial.model.DataConverter;
-import com.michael.flashsocial.model.GroupItem;
-import com.michael.flashsocial.model.Item;
+import com.michael.flashsocial.model.Person;
 
 import java.util.List;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
-    private List<Item> itemList;
+public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ItemHolder> {
+    private List<Person> personList;
 
-    public ItemAdapter(List<Item> itemList) {
-        this.itemList = itemList;
+    public PersonAdapter(List<Person> personList) {
+        this.personList = personList;
     }
 
-    public void setData(List<Item> newList) {
-        itemList = newList;
+    public void setData(List<Person> newList) {
+        personList = newList;
         notifyDataSetChanged();
     }
 
@@ -38,16 +37,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
-        Item item = itemList.get(position);
-        if (item == null) return;
-        holder.avt.setImageBitmap(DataConverter.convertByteArrToBitmap(item.getAvatar()));
-        holder.name.setText(item.getFirstName() + " " + item.getLastName());
-        holder.role.setText(item.getRole());
+        Person person = personList.get(position);
+        if (person == null) return;
+        holder.avt.setImageBitmap(DataConverter.convertByteArrToBitmap(person.getAvatar()));
+        holder.name.setText(person.getFirstName() + " " + person.getLastName());
+        holder.role.setText(person.getRole());
     }
 
     @Override
     public int getItemCount() {
-        return itemList != null ? itemList.size() : 0;
+        return personList != null ? personList.size() : 0;
     }
 
     static class ItemHolder extends RecyclerView.ViewHolder {

@@ -13,21 +13,29 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointBackward;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.michael.flashsocial.R;
 import com.michael.flashsocial.custom_rule.CycleRule;
-import com.michael.flashsocial.database.ItemDB;
+import com.michael.flashsocial.database.PersonDB;
 import com.michael.flashsocial.model.DataConverter;
-import com.michael.flashsocial.model.Item;
+import com.michael.flashsocial.model.Person;
 import com.michael.flashsocial.utils.NavigationUtil;
 import com.michael.flashsocial.utils.RequestSignal;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ItemCreationActivity extends AppCompatActivity implements CycleRule {
     private MaterialButton avtBtnUpload;
@@ -39,8 +47,11 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
     private TextInputEditText firstNameInput;
     private TextInputEditText lastNameInput;
     private TextInputEditText dobInput;
-    private AutoCompleteTextView roleInput;
+    private MaterialAutoCompleteTextView roleInput;
     private TextInputEditText uniqueFeatureInput;
+
+    private TextInputLayout dobLayoutInput;
+    private MaterialDatePicker materialDatePicker;
 
 
     @Override
@@ -62,6 +73,14 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
         dobInput = findViewById(R.id.act_item_creation_dob);
         roleInput = findViewById(R.id.act_item_creation_role);
         uniqueFeatureInput = findViewById(R.id.act_item_creation_unique_feature);
+
+        dobLayoutInput = findViewById(R.id.act_item_creation_dob_layout);
+        MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+        builder.setTitleText("Select a date");
+        CalendarConstraints.Builder constraint = new CalendarConstraints.Builder();
+        constraint.setValidator(DateValidatorPointBackward.now());
+        builder.setCalendarConstraints(constraint.build());
+        materialDatePicker = builder.build();
     }
 
     @Override
@@ -69,6 +88,16 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
         avtBtnUpload.setOnClickListener(this::handleAvtBtnUpload);
         avtBtnTake.setOnClickListener(this::handleAvtBtnTake);
         submitBtn.setOnClickListener(this::handleSubmitBtn);
+
+        dobLayoutInput.setEndIconOnClickListener(view -> materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER"));
+        dobInput.setOnClickListener(view -> materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER"));
+        materialDatePicker.addOnPositiveButtonClickListener(selection -> dobInput.setText(materialDatePicker.getHeaderText()));
+
+        List<String> roles = PersonDB.getInstance(this).itemDao().getAllUniqueRole();
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, roles);
+        roleInput.setAdapter(arrayAdapter);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
     }
 
     private void handleSubmitBtn(View view) {
@@ -78,8 +107,8 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
 //            Date dob = new SimpleDateFormat("MM/dd/yy").parse(dobInput.getText().toString());
             String role = roleInput.getText().toString();
             String uniqueFeature = uniqueFeatureInput.getText().toString();
-            Item item = new Item(fName, lname, DataConverter.convertImageToByteArr(bitmap), role, uniqueFeature);
-            ItemDB.getInstance(this).itemDao().insertItem(item);
+            Person person = new Person(fName, lname, DataConverter.convertImageToByteArr(bitmap), role, uniqueFeature);
+            PersonDB.getInstance(this).itemDao().insertItem(person);
             NavigationUtil.hideSoftKeyboard(this);
             navigateBack(getIntent());
         } catch (NullPointerException e) {

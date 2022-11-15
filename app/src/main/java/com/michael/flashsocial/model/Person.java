@@ -4,10 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
-
-@Entity(tableName = "item")
-public class Item {
+@Entity(tableName = "person")
+public class Person {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String firstName;
@@ -18,7 +16,7 @@ public class Item {
     private String role;
     private String uniqueFeature;
 
-    public Item(String firstName, String lastName, byte[] avatar, String role, String uniqueFeature) {
+    public Person(String firstName, String lastName, byte[] avatar, String role, String uniqueFeature) {
         this.firstName = firstName;
         this.lastName = lastName;
 //        this.dob = dob;

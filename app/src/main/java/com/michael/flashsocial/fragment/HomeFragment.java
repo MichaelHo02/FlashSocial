@@ -4,35 +4,26 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.michael.flashsocial.R;
-import com.michael.flashsocial.activity.FolderCreationActivity;
 import com.michael.flashsocial.activity.ItemCreationActivity;
-import com.michael.flashsocial.adapter.GroupItemAdapter;
-import com.michael.flashsocial.adapter.ItemAdapter;
+import com.michael.flashsocial.adapter.PersonAdapter;
 import com.michael.flashsocial.custom_rule.CycleRule;
-import com.michael.flashsocial.database.GroupItemDB;
-import com.michael.flashsocial.database.ItemDB;
-import com.michael.flashsocial.model.GroupItem;
-import com.michael.flashsocial.model.Item;
+import com.michael.flashsocial.database.PersonDB;
+import com.michael.flashsocial.model.Person;
 import com.michael.flashsocial.utils.NavigationUtil;
 import com.michael.flashsocial.utils.RequestSignal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements CycleRule {
@@ -50,8 +41,8 @@ public class HomeFragment extends Fragment implements CycleRule {
     private MaterialToolbar materialToolbar;
     private View view;
 
-    private List<Item> itemList;
-    private ItemAdapter itemAdapter;
+    private List<Person> personList;
+    private PersonAdapter personAdapter;
 
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
@@ -100,9 +91,9 @@ public class HomeFragment extends Fragment implements CycleRule {
     private void recycleViewInit() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        itemList = getItemList();
-        itemAdapter = new ItemAdapter(itemList);
-        recyclerView.setAdapter(itemAdapter);
+        personList = getItemList();
+        personAdapter = new PersonAdapter(personList);
+        recyclerView.setAdapter(personAdapter);
     }
 
     private boolean handleMenuItemClick(MenuItem item) {
@@ -125,8 +116,8 @@ public class HomeFragment extends Fragment implements CycleRule {
         return true;
     }
 
-    private List<Item> getItemList() {
-        return ItemDB.getInstance(this.getContext()).itemDao().getAllItems();
+    private List<Person> getItemList() {
+        return PersonDB.getInstance(this.getContext()).itemDao().getAllPeople();
     }
 
     private boolean navigateSetting() {
@@ -137,8 +128,8 @@ public class HomeFragment extends Fragment implements CycleRule {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RequestSignal.ITEM_CREATION_ACTIVITY && resultCode == Activity.RESULT_OK) {
-            itemList = ItemDB.getInstance(this.getContext()).itemDao().getAllItems();
-            itemAdapter.setData(itemList);
+            personList = PersonDB.getInstance(this.getContext()).itemDao().getAllPeople();
+            personAdapter.setData(personList);
         }
     }
 }
