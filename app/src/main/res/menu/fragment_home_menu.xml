@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/frag_home_add"
-        android:title="@string/add"
-        android:icon="@drawable/ic_baseline_create_new_folder_24"
+        android:title="@string/add_item"
+        android:icon="@drawable/ic_baseline_note_add_24"
         app:showAsAction="ifRoom" />
 </menu>

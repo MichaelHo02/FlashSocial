@@ -31,7 +31,7 @@ public class GroupItemAdapter extends RecyclerView.Adapter<GroupItemAdapter.Grou
     @Override
     public GroupItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.holder_group_item, parent, false);
+                .inflate(R.layout.holder_item, parent, false);
         return new GroupItemHolder(view);
     }
 
@@ -42,9 +42,9 @@ public class GroupItemAdapter extends RecyclerView.Adapter<GroupItemAdapter.Grou
         holder.nameView.setText(groupItem.getName());
         holder.itemSizeView.setText(String.format("Number of item: %d", groupItem.getItemSize()));
         int iconId = groupItem.getIsLearning() ? R.drawable.ic_baseline_stop_24 : R.drawable.ic_baseline_play_arrow_24;
-        String actionText = groupItem.getIsLearning() ? "Stop" : "Learn";
+//        String actionText = groupItem.getIsLearning() ? "Stop" : "Learn";
         holder.action.setIconResource(iconId);
-        holder.action.setText(actionText);
+//        holder.action.setText(actionText);
     }
 
     @Override

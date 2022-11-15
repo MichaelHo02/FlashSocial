@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
@@ -15,6 +14,7 @@ import com.michael.flashsocial.R;
 import com.michael.flashsocial.custom_rule.CycleRule;
 import com.michael.flashsocial.database.GroupItemDB;
 import com.michael.flashsocial.model.GroupItem;
+import com.michael.flashsocial.utils.NavigationUtil;
 
 public class FolderCreationActivity extends AppCompatActivity implements CycleRule {
     MaterialToolbar materialToolbar;
@@ -50,7 +50,7 @@ public class FolderCreationActivity extends AppCompatActivity implements CycleRu
         GroupItem groupItem = new GroupItem(folderName, 0, false);
         GroupItemDB.getInstance(this).groupItemDao().create(groupItem);
         nameField.setText("");
-        hideSoftKeyboard();
+        NavigationUtil.hideSoftKeyboard(this);
         navigateBack(getIntent());
     }
 
@@ -61,14 +61,5 @@ public class FolderCreationActivity extends AppCompatActivity implements CycleRu
     private void navigateBack(Intent intent) {
         setResult(Activity.RESULT_OK, intent);
         finish();
-    }
-
-    private void hideSoftKeyboard() {
-        try {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
     }
 }

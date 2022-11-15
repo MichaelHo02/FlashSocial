@@ -19,6 +19,7 @@ public abstract class GroupItemDB extends RoomDatabase {
             instance = Room
                     .databaseBuilder(context.getApplicationContext(), GroupItemDB.class, DATABASE_NAME)
                     .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
                     .build();
         }
         return instance;

@@ -21,11 +21,16 @@ import android.view.ViewGroup;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.michael.flashsocial.R;
 import com.michael.flashsocial.activity.FolderCreationActivity;
+import com.michael.flashsocial.activity.ItemCreationActivity;
 import com.michael.flashsocial.adapter.GroupItemAdapter;
+import com.michael.flashsocial.adapter.ItemAdapter;
 import com.michael.flashsocial.custom_rule.CycleRule;
 import com.michael.flashsocial.database.GroupItemDB;
+import com.michael.flashsocial.database.ItemDB;
 import com.michael.flashsocial.model.GroupItem;
+import com.michael.flashsocial.model.Item;
 import com.michael.flashsocial.utils.NavigationUtil;
+import com.michael.flashsocial.utils.RequestSignal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +50,8 @@ public class HomeFragment extends Fragment implements CycleRule {
     private MaterialToolbar materialToolbar;
     private View view;
 
-    private List<GroupItem> groupItemList;
-    private GroupItemAdapter groupItemAdapter;
+    private List<Item> itemList;
+    private ItemAdapter itemAdapter;
 
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
@@ -95,28 +100,33 @@ public class HomeFragment extends Fragment implements CycleRule {
     private void recycleViewInit() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        groupItemList = getGroupItemList();
-        groupItemAdapter = new GroupItemAdapter(groupItemList);
-        recyclerView.setAdapter(groupItemAdapter);
+        itemList = getItemList();
+        itemAdapter = new ItemAdapter(itemList);
+        recyclerView.setAdapter(itemAdapter);
     }
 
     private boolean handleMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.frag_home_add:
-                return navigateAddFolder();
+                return navigateAddItem();
             case R.id.frag_home_setting:
                 return navigateSetting();
         }
         return false;
     }
 
-    private boolean navigateAddFolder() {
-        NavigationUtil.navigateActivity(this, view.getContext(), FolderCreationActivity.class, 100);
+    private boolean navigateAddItem() {
+        NavigationUtil.navigateActivity(
+                this,
+                view.getContext(),
+                ItemCreationActivity.class,
+                RequestSignal.ITEM_CREATION_ACTIVITY
+        );
         return true;
     }
 
-    private List<GroupItem> getGroupItemList() {
-        return GroupItemDB.getInstance(this.getContext()).groupItemDao().getAll();
+    private List<Item> getItemList() {
+        return ItemDB.getInstance(this.getContext()).itemDao().getAllItems();
     }
 
     private boolean navigateSetting() {
@@ -126,10 +136,9 @@ public class HomeFragment extends Fragment implements CycleRule {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
-            groupItemList = getGroupItemList();
-            groupItemAdapter.setData(groupItemList);
-
+        if (requestCode == RequestSignal.ITEM_CREATION_ACTIVITY && resultCode == Activity.RESULT_OK) {
+            itemList = ItemDB.getInstance(this.getContext()).itemDao().getAllItems();
+            itemAdapter.setData(itemList);
         }
     }
 }
