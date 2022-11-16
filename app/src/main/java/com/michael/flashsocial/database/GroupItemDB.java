@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.michael.flashsocial.dao.GroupItemDao;
 import com.michael.flashsocial.model.GroupItem;
 
-@Database(entities = {GroupItem.class}, version = 1)
+@Database(entities = {GroupItem.class}, version = 1, exportSchema = false)
 public abstract class GroupItemDB extends RoomDatabase {
     private static final String DATABASE_NAME = "groupItem.db";
     private static GroupItemDB instance;

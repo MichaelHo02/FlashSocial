@@ -5,11 +5,14 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.michael.flashsocial.dao.PersonDao;
 import com.michael.flashsocial.model.Person;
+import com.michael.flashsocial.utils.CalendarConverter;
 
 @Database(entities = {Person.class}, version = 4, exportSchema = false)
+@TypeConverters({CalendarConverter.class})
 public abstract class PersonDB extends RoomDatabase {
     private static final String DATABASE_NAME = "person.db";
     private static PersonDB instance;

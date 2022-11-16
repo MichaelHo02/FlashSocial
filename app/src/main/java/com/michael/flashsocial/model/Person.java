@@ -4,22 +4,24 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Calendar;
+
 @Entity(tableName = "person")
 public class Person {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String firstName;
     private String lastName;
-//    private Date dob;
+    private Calendar dob;
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] avatar;
     private String role;
     private String uniqueFeature;
 
-    public Person(String firstName, String lastName, byte[] avatar, String role, String uniqueFeature) {
+    public Person(String firstName, String lastName, Calendar dob, byte[] avatar, String role, String uniqueFeature) {
         this.firstName = firstName;
         this.lastName = lastName;
-//        this.dob = dob;
+        this.dob = dob;
         this.avatar = avatar;
         this.role = role;
         this.uniqueFeature = uniqueFeature;
@@ -49,13 +51,13 @@ public class Person {
         this.lastName = lastName;
     }
 
-//    public Date getDob() {
-//        return dob;
-//    }
+    public Calendar getDob() {
+        return dob;
+    }
 
-//    public void setDob(Date dob) {
-//        this.dob = dob;
-//    }
+    public void setDob(Calendar dob) {
+        this.dob = dob;
+    }
 
     public byte[] getAvatar() {
         return avatar;

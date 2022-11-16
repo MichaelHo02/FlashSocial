@@ -12,6 +12,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,9 +26,11 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textview.MaterialTextView;
 import com.michael.flashsocial.R;
 import com.michael.flashsocial.custom_rule.CycleRule;
 import com.michael.flashsocial.database.PersonDB;
@@ -34,9 +38,17 @@ import com.michael.flashsocial.utils.DataConverter;
 import com.michael.flashsocial.model.Person;
 import com.michael.flashsocial.utils.NavigationUtil;
 import com.michael.flashsocial.utils.RequestSignal;
+import com.michael.flashsocial.utils.TextValidator;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TimeZone;
 
 public class ItemCreationActivity extends AppCompatActivity implements CycleRule {
     MaterialToolbar materialToolbar;
@@ -51,6 +63,11 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
     private TextInputEditText dobInput;
     private MaterialAutoCompleteTextView roleInput;
     private TextInputEditText uniqueFeatureInput;
+
+    private TextInputLayout firstNameLayout;
+    private TextInputLayout lastNameLayout;
+    private TextInputLayout roleLayout;
+    private TextInputLayout uniqueFeatureLayout;
 
     private TextInputLayout dobLayoutInput;
     private MaterialDatePicker materialDatePicker;
@@ -76,10 +93,18 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
         dobInput = findViewById(R.id.act_item_creation_dob);
         roleInput = findViewById(R.id.act_item_creation_role);
         uniqueFeatureInput = findViewById(R.id.act_item_creation_unique_feature);
-
         dobLayoutInput = findViewById(R.id.act_item_creation_dob_layout);
+
+        firstNameLayout = findViewById(R.id.act_item_creation_first_name_layout);
+        lastNameLayout = findViewById(R.id.act_item_creation_last_name_layout);
+        roleLayout = findViewById(R.id.act_item_creation_role_layout);
+        uniqueFeatureLayout = findViewById(R.id.act_item_creation_unique_feature_layout);
+        initCalendar();
+    }
+
+    private void initCalendar() {
         MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
-        builder.setTitleText("Select a date");
+        builder.setTitleText("Select the birthday");
         CalendarConstraints.Builder constraint = new CalendarConstraints.Builder();
         constraint.setValidator(DateValidatorPointBackward.now());
         builder.setCalendarConstraints(constraint.build());
@@ -93,16 +118,83 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
         avtBtnTake.setOnClickListener(this::handleAvtBtnTake);
         submitBtn.setOnClickListener(this::handleSubmitBtn);
 
+        firstNameInput.addTextChangedListener(new TextValidator(findViewById(R.id.act_item_creation_first_name_layout)) {
+            @Override
+            public void validate(TextInputLayout textInputLayout, String text) {
+                if (text == null) {
+                    textInputLayout.setError("No Input");
+                } else if (text.contains(" ")) {
+                    textInputLayout.setError("Cannot contain space");
+                } else if (text.trim().isEmpty()) {
+                    textInputLayout.setError("Cannot be empty");
+                } else {
+                    textInputLayout.setError(null);
+                }
+            }
+        });
+        lastNameInput.addTextChangedListener(new TextValidator(findViewById(R.id.act_item_creation_last_name_layout)) {
+            @Override
+            public void validate(TextInputLayout textInputLayout, String text) {
+                if (text == null) {
+                    textInputLayout.setError("No Input");
+                } else if (text.startsWith(" ")) {
+                    textInputLayout.setError("Cannot start with space");
+                } else if (text.endsWith(" ")) {
+                    textInputLayout.setError("Cannot end with space");
+                } else if (text.trim().isEmpty()) {
+                    textInputLayout.setError("Cannot be empty");
+                } else {
+                    textInputLayout.setError(null);
+                }
+            }
+        });
+        roleInput.addTextChangedListener(new TextValidator(findViewById(R.id.act_item_creation_role_layout)) {
+            @Override
+            public void validate(TextInputLayout textInputLayout, String text) {
+                if (text == null) {
+                    textInputLayout.setError("No Input");
+                } else if (text.startsWith(" ")) {
+                    textInputLayout.setError("Cannot start with space");
+                } else if (text.endsWith(" ")) {
+                    textInputLayout.setError("Cannot end with space");
+                } else if (text.trim().isEmpty()) {
+                    textInputLayout.setError("Cannot be empty");
+                } else {
+                    textInputLayout.setError(null);
+                }
+            }
+        });
+        uniqueFeatureInput.addTextChangedListener(new TextValidator(findViewById(R.id.act_item_creation_unique_feature_layout)) {
+            @Override
+            public void validate(TextInputLayout textInputLayout, String text) {
+                if (text == null) {
+                    textInputLayout.setError("No Input");
+                } else if (text.startsWith(" ")) {
+                    textInputLayout.setError("Cannot start with space");
+                } else if (text.endsWith(" ")) {
+                    textInputLayout.setError("Cannot end with space");
+                } else if (text.trim().isEmpty()) {
+                    textInputLayout.setError("Cannot be empty");
+                } else {
+                    textInputLayout.setError(null);
+                }
+            }
+        });
+
         dobLayoutInput.setEndIconOnClickListener(view -> materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER"));
         dobInput.setOnClickListener(view -> materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER"));
         materialDatePicker.addOnPositiveButtonClickListener(selection -> dobInput.setText(materialDatePicker.getHeaderText()));
+        addAutoCompleteData();
+    }
 
+    private void addAutoCompleteData() {
         List<String> roles = PersonDB.getInstance(this).itemDao().getAllUniqueRole();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, roles);
+        Set<String> setRoles = new HashSet<>(roles);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, setRoles.toArray(new String[0]));
         roleInput.setAdapter(arrayAdapter);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
     }
+
 
     private void handleNavigation(View view) {
         navigateBack(getIntent());
@@ -110,17 +202,28 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
 
     private void handleSubmitBtn(View view) {
         try {
-            String fName = firstNameInput.getText().toString();
-            String lname = lastNameInput.getText().toString();
-//            Date dob = new SimpleDateFormat("MM/dd/yy").parse(dobInput.getText().toString());
-            String role = roleInput.getText().toString();
-            String uniqueFeature = uniqueFeatureInput.getText().toString();
-            byte[] avt = DataConverter.compressImage(DataConverter.convertImageToByteArr(bitmap));
-            Person person = new Person(fName, lname, avt, role, uniqueFeature);
-            PersonDB.getInstance(this).itemDao().insertItem(person);
-            NavigationUtil.hideSoftKeyboard(this);
-            navigateBack(getIntent());
+            if (firstNameLayout.getError() == null && lastNameLayout.getError() == null
+                    && roleLayout.getError() == null && uniqueFeatureLayout.getError() == null &&
+                    bitmap != null) {
+                String fName = Objects.requireNonNull(firstNameInput.getText()).toString();
+                String lname = Objects.requireNonNull(lastNameInput.getText()).toString();
+                Calendar dob = new GregorianCalendar(TimeZone.getTimeZone(Objects.requireNonNull(dobInput.getText()).toString()));
+                String role = roleInput.getText().toString();
+                String uniqueFeature = Objects.requireNonNull(uniqueFeatureInput.getText()).toString();
+                byte[] avt = DataConverter.compressImage(DataConverter.convertImageToByteArr(bitmap));
+                if (fName.isEmpty() || lname.isEmpty() || role.isEmpty() || uniqueFeature.isEmpty() || dobInput.getText().toString().isEmpty()) {
+                    Snackbar.make(submitBtn, "Missing fields please fulfilled", Snackbar.LENGTH_SHORT).setAnchorView(submitBtn).show();
+                } else {
+                    Person person = new Person(fName, lname, dob, avt, role, uniqueFeature);
+                    PersonDB.getInstance(this).itemDao().insertItem(person);
+                    NavigationUtil.hideSoftKeyboard(this);
+                    navigateBack(getIntent());
+                }
+            } else {
+                Snackbar.make(submitBtn, "Invalid fields or missing avatar", Snackbar.LENGTH_SHORT).setAnchorView(submitBtn).show();
+            }
         } catch (NullPointerException e) {
+            Snackbar.make(submitBtn, "Missing fields or avatar", Snackbar.LENGTH_SHORT).setAnchorView(submitBtn).show();
             e.printStackTrace();
         }
     }
