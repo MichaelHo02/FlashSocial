@@ -214,7 +214,7 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
                 if (fName.isEmpty() || lname.isEmpty() || role.isEmpty() || uniqueFeature.isEmpty() || dobInput.getText().toString().isEmpty()) {
                     Snackbar.make(submitBtn, "Missing fields please fulfilled", Snackbar.LENGTH_SHORT).setAnchorView(submitBtn).show();
                 } else {
-                    Person person = new Person(fName, lname, dob, avt, role, uniqueFeature);
+                    Person person = new Person(fName, lname, dob, avt, role, uniqueFeature, false);
                     PersonDB.getInstance(this).itemDao().insertItem(person);
                     NavigationUtil.hideSoftKeyboard(this);
                     navigateBack(getIntent());

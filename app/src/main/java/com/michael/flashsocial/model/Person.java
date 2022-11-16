@@ -4,10 +4,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 @Entity(tableName = "person")
-public class Person {
+public class Person implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String firstName;
@@ -17,14 +18,16 @@ public class Person {
     private byte[] avatar;
     private String role;
     private String uniqueFeature;
+    private boolean chooseToLearn;
 
-    public Person(String firstName, String lastName, Calendar dob, byte[] avatar, String role, String uniqueFeature) {
+    public Person(String firstName, String lastName, Calendar dob, byte[] avatar, String role, String uniqueFeature, boolean chooseToLearn) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
         this.avatar = avatar;
         this.role = role;
         this.uniqueFeature = uniqueFeature;
+        this.chooseToLearn = chooseToLearn;
     }
 
     public int getId() {
@@ -81,5 +84,13 @@ public class Person {
 
     public void setUniqueFeature(String uniqueFeature) {
         this.uniqueFeature = uniqueFeature;
+    }
+
+    public boolean isChooseToLearn() {
+        return chooseToLearn;
+    }
+
+    public void setChooseToLearn(boolean chooseToLearn) {
+        this.chooseToLearn = chooseToLearn;
     }
 }
