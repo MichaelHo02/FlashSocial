@@ -41,6 +41,7 @@ import com.michael.flashsocial.utils.RequestSignal;
 import com.michael.flashsocial.utils.TextValidator;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -72,6 +73,9 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
     private TextInputLayout dobLayoutInput;
     private MaterialDatePicker materialDatePicker;
 
+    private boolean isUpdate = false;
+    private Person person;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,28 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
         setContentView(R.layout.activity_item_creation);
         initUI();
         initUIAction();
+        passProps();
+    }
+
+    private void passProps() {
+        try {
+            Intent prevIntent = getIntent();
+            Bundle bundle = prevIntent.getExtras();
+            person = (Person) bundle.get("data");
+            bitmap = DataConverter.convertByteArrToBitmap(person.getAvatar());
+            shapeableImageView.setImageBitmap(bitmap);
+            firstNameInput.setText(person.getFirstName());
+            lastNameInput.setText(person.getLastName());
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
+            dobInput.setText(sdf.format(person.getDob().getTime()));
+            roleInput.setText(person.getRole());
+            uniqueFeatureInput.setText(person.getUniqueFeature());
+
+            isUpdate = (boolean) bundle.get("isUpdate");
+        } catch (Exception e) {
+//            Snackbar.make(findViewById(R.id.act_item_creation_submit_btn), "Cannot render chosen person", Snackbar.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -195,7 +221,6 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
-
     private void handleNavigation(View view) {
         navigateBack(getIntent());
     }
@@ -214,10 +239,26 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
                 if (fName.isEmpty() || lname.isEmpty() || role.isEmpty() || uniqueFeature.isEmpty() || dobInput.getText().toString().isEmpty()) {
                     Snackbar.make(submitBtn, "Missing fields please fulfilled", Snackbar.LENGTH_SHORT).setAnchorView(submitBtn).show();
                 } else {
-                    Person person = new Person(fName, lname, dob, avt, role, uniqueFeature, false);
-                    PersonDB.getInstance(this).itemDao().insertItem(person);
-                    NavigationUtil.hideSoftKeyboard(this);
-                    navigateBack(getIntent());
+//                    NavigationUtil.hideSoftKeyboard(this);
+                    if (isUpdate) {
+                        person.setFirstName(fName);
+                        person.setLastName(lname);
+                        person.setDob(dob);
+                        Log.e("dob", dobInput.getText().toString());
+                        person.setAvatar(avt);
+                        person.setRole(role);
+                        person.setUniqueFeature(uniqueFeature);
+
+                        Bundle bundle = new Bundle();
+                        PersonDB.getInstance(this).itemDao().updateItem(person);
+                        bundle.putSerializable("data", person);
+                        Intent intent = getIntent().putExtras(bundle);
+                        navigateBack(intent);
+                    } else {
+                        person = new Person(fName, lname, dob, avt, role, uniqueFeature, false);
+                        PersonDB.getInstance(this).itemDao().insertItem(person);
+                        navigateBack(getIntent());
+                    }
                 }
             } else {
                 Snackbar.make(submitBtn, "Invalid fields or missing avatar", Snackbar.LENGTH_SHORT).setAnchorView(submitBtn).show();

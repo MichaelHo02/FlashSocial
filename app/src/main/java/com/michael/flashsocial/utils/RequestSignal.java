@@ -6,6 +6,6 @@ public class RequestSignal {
     public final static int ITEM_CREATION_UPLOAD_PHOTO = 120;
     public final static int ITEM_CREATION_PERMISSION_CAM = 130;
     public final static int ITEM_DETAIL_ACTIVITY = 140;
-
+    public final static int ITEM_DETAIL_EDIT_ACTIVITY = 150;
     private RequestSignal() {}
 }

@@ -1,11 +1,15 @@
 package com.michael.flashsocial.activity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -16,6 +20,8 @@ import com.michael.flashsocial.R;
 import com.michael.flashsocial.custom_rule.CycleRule;
 import com.michael.flashsocial.model.Person;
 import com.michael.flashsocial.utils.DataConverter;
+import com.michael.flashsocial.utils.NavigationUtil;
+import com.michael.flashsocial.utils.RequestSignal;
 
 import java.text.SimpleDateFormat;
 
@@ -27,7 +33,7 @@ public class ItemDetailActivity extends AppCompatActivity implements CycleRule {
     private MaterialTextView dobView;
     private MaterialTextView roleView;
     private MaterialTextView uniqueFeatureView;
-
+    private Person person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +41,25 @@ public class ItemDetailActivity extends AppCompatActivity implements CycleRule {
         setContentView(R.layout.activity_item_detail);
         initUI();
         initUIAction();
-        replaceInfo();
-    }
-
-    private void replaceInfo() {
         try {
             Intent prevIntent = getIntent();
             Bundle bundle = prevIntent.getExtras();
-            Person person = (Person) bundle.get("data");
-            avtView.setImageBitmap(DataConverter.convertByteArrToBitmap(person.getAvatar()));
-            fullNameView.setText(person.getFirstName() + ", " + person.getLastName());
-            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
-            dobView.setText(sdf.format(person.getDob().getTime()));
-            roleView.setText(person.getRole());
-            uniqueFeatureView.setText(person.getUniqueFeature());
+            person = (Person) bundle.get("data");
+            replaceInfo(person);
         } catch (Exception e) {
             Snackbar.make(findViewById(R.id.nestedScrollView), "Cannot render chosen person", Snackbar.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+    }
 
-
+    private void replaceInfo(@NonNull Person person) {
+        Log.e("Render info", person.getFirstName());
+        avtView.setImageBitmap(DataConverter.convertByteArrToBitmap(person.getAvatar()));
+        fullNameView.setText(person.getFirstName() + ", " + person.getLastName());
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
+        dobView.setText(sdf.format(person.getDob().getTime()));
+        roleView.setText(person.getRole());
+        uniqueFeatureView.setText(person.getUniqueFeature());
     }
 
     @Override
@@ -74,6 +79,35 @@ public class ItemDetailActivity extends AppCompatActivity implements CycleRule {
     @Override
     public void initUIAction() {
         materialToolbar.setNavigationOnClickListener(this::handleNavigation);
+        materialToolbar.setOnMenuItemClickListener(this::handleMenu);
+    }
+
+    private boolean handleMenu(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.act_item_detail_edit:
+                return navigateEditItem();
+            case R.id.act_item_detail_setting:
+                return navigateSetting();
+        }
+        return false;
+    }
+
+    private boolean navigateSetting() {
+        return true;
+    }
+
+    private boolean navigateEditItem() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("data", person);
+        bundle.putBoolean("isUpdate", true);
+        NavigationUtil.navigateActivity(
+                this,
+                ItemDetailActivity.this,
+                ItemCreationActivity.class,
+                RequestSignal.ITEM_DETAIL_EDIT_ACTIVITY,
+                bundle
+        );
+        return true;
     }
 
     private void handleNavigation(View view) {
@@ -88,7 +122,21 @@ public class ItemDetailActivity extends AppCompatActivity implements CycleRule {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.fragment_home_menu, menu);
+        getMenuInflater().inflate(R.menu.activity_item_detail_menu, menu);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RequestSignal.ITEM_DETAIL_EDIT_ACTIVITY && resultCode == Activity.RESULT_OK) {
+            try {
+                Log.e("intent data", String.valueOf(data.getExtras().get("data") != null));
+                replaceInfo((Person) data.getExtras().get("data"));
+            } catch (Exception e) {
+                Snackbar.make(findViewById(R.id.nestedScrollView), "Cannot render chosen person", Snackbar.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
     }
 }

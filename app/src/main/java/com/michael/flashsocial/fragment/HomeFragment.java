@@ -94,15 +94,12 @@ public class HomeFragment extends Fragment implements CycleRule {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         personList = getItemList();
-        personAdapter = new PersonAdapter(personList, new IClickCallback() {
-            @Override
-            public void onClickItem(Person person) {
-                Intent intent = new Intent(view.getContext(), ItemDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("data", person);
-                intent.putExtras(bundle);
-                startActivityForResult(intent, RequestSignal.ITEM_DETAIL_ACTIVITY);
-            }
+        personAdapter = new PersonAdapter(personList, person -> {
+            Intent intent = new Intent(view.getContext(), ItemDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("data", person);
+            intent.putExtras(bundle);
+            startActivityForResult(intent, RequestSignal.ITEM_DETAIL_ACTIVITY);
         });
         recyclerView.setAdapter(personAdapter);
     }
@@ -138,9 +135,11 @@ public class HomeFragment extends Fragment implements CycleRule {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RequestSignal.ITEM_CREATION_ACTIVITY && resultCode == Activity.RESULT_OK) {
-            personList = PersonDB.getInstance(this.getContext()).itemDao().getAllPeople();
-            personAdapter.setData(personList);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == RequestSignal.ITEM_CREATION_ACTIVITY || requestCode == RequestSignal.ITEM_DETAIL_ACTIVITY) {
+                personList = PersonDB.getInstance(this.getContext()).itemDao().getAllPeople();
+                personAdapter.setData(personList);
+            }
         }
     }
 }
