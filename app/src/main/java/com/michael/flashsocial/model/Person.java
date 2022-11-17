@@ -13,14 +13,14 @@ public class Person implements Serializable {
     private int id;
     private String firstName;
     private String lastName;
-    private Calendar dob;
+    private long dob;
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] avatar;
     private String role;
     private String uniqueFeature;
     private boolean chooseToLearn;
 
-    public Person(String firstName, String lastName, Calendar dob, byte[] avatar, String role, String uniqueFeature, boolean chooseToLearn) {
+    public Person(String firstName, String lastName, long dob, byte[] avatar, String role, String uniqueFeature, boolean chooseToLearn) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
@@ -54,11 +54,11 @@ public class Person implements Serializable {
         this.lastName = lastName;
     }
 
-    public Calendar getDob() {
+    public long getDob() {
         return dob;
     }
 
-    public void setDob(Calendar dob) {
+    public void setDob(long dob) {
         this.dob = dob;
     }
 

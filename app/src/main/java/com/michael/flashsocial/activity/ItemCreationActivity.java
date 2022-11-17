@@ -41,7 +41,10 @@ import com.michael.flashsocial.utils.RequestSignal;
 import com.michael.flashsocial.utils.TextValidator;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -96,7 +99,7 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
             firstNameInput.setText(person.getFirstName());
             lastNameInput.setText(person.getLastName());
             SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
-            dobInput.setText(sdf.format(person.getDob().getTime()));
+            dobInput.setText(sdf.format(person.getDob()));
             roleInput.setText(person.getRole());
             uniqueFeatureInput.setText(person.getUniqueFeature());
 
@@ -131,6 +134,20 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
     private void initCalendar() {
         MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
         builder.setTitleText("Select the birthday");
+        long today;
+        if (dobInput.getText() == null || dobInput.getText().toString().isEmpty()) {
+            today = MaterialDatePicker.todayInUtcMilliseconds();
+        } else {
+            String s = dobInput.getText().toString();
+            SimpleDateFormat sdf = new SimpleDateFormat(s.length() == 12 ? "MMM dd, yyyy" : "MMM d, yyyy");
+            try {
+                today = Objects.requireNonNull(sdf.parse(s)).getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+                today = MaterialDatePicker.todayInUtcMilliseconds();
+            }
+        }
+        builder.setSelection(today);
         CalendarConstraints.Builder constraint = new CalendarConstraints.Builder();
         constraint.setValidator(DateValidatorPointBackward.now());
         builder.setCalendarConstraints(constraint.build());
@@ -210,6 +227,7 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
         dobLayoutInput.setEndIconOnClickListener(view -> materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER"));
         dobInput.setOnClickListener(view -> materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER"));
         materialDatePicker.addOnPositiveButtonClickListener(selection -> dobInput.setText(materialDatePicker.getHeaderText()));
+
         addAutoCompleteData();
     }
 
@@ -232,7 +250,15 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
                     bitmap != null) {
                 String fName = Objects.requireNonNull(firstNameInput.getText()).toString();
                 String lname = Objects.requireNonNull(lastNameInput.getText()).toString();
-                Calendar dob = new GregorianCalendar(TimeZone.getTimeZone(Objects.requireNonNull(dobInput.getText()).toString()));
+                String dobStr = dobInput.getText().toString();
+                SimpleDateFormat sdf;
+                if (dobStr.length() == 12) {
+                    sdf = new SimpleDateFormat("MMM dd, yyyy");
+                } else {
+                    sdf = new SimpleDateFormat("MMM d, yyyy");
+                }
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                long dob = Objects.requireNonNull(sdf.parse(Objects.requireNonNull(dobInput.getText()).toString())).getTime();
                 String role = roleInput.getText().toString();
                 String uniqueFeature = Objects.requireNonNull(uniqueFeatureInput.getText()).toString();
                 byte[] avt = DataConverter.compressImage(DataConverter.convertImageToByteArr(bitmap));
@@ -265,6 +291,8 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
             }
         } catch (NullPointerException e) {
             Snackbar.make(submitBtn, "Missing fields or avatar", Snackbar.LENGTH_SHORT).setAnchorView(submitBtn).show();
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
     }

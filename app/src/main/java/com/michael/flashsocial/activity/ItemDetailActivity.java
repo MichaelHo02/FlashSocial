@@ -57,7 +57,7 @@ public class ItemDetailActivity extends AppCompatActivity implements CycleRule {
         avtView.setImageBitmap(DataConverter.convertByteArrToBitmap(person.getAvatar()));
         fullNameView.setText(person.getFirstName() + ", " + person.getLastName());
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
-        dobView.setText(sdf.format(person.getDob().getTime()));
+        dobView.setText(sdf.format(person.getDob()));
         roleView.setText(person.getRole());
         uniqueFeatureView.setText(person.getUniqueFeature());
     }
