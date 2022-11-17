@@ -11,4 +11,7 @@
     <string name="submit">Submit</string>
     <string name="upload_photo">Upload photo</string>
     <string name="take_photo">Take photo</string>
+    <string name="remember_this_person">Remember this person?</string>
+    <string name="nope">Nope</string>
+    <string name="yes">Yes</string>
 </resources>

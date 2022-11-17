@@ -4,10 +4,15 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textview.MaterialTextView;
 import com.michael.flashsocial.R;
 
 /**
@@ -25,6 +30,10 @@ public class LearningFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    MaterialCardView detailView;
+    MaterialCardView overlayView;
+
 
     public LearningFragment() {
         // Required empty public constructor
@@ -61,6 +70,42 @@ public class LearningFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_learning, container, false);
+        View view = inflater.inflate(R.layout.fragment_learning, container, false);
+        overlayView = view.findViewById(R.id.frag_learn_overlay_card);
+        detailView = view.findViewById(R.id.frag_learn_detail_card);
+        overlayView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                detailView.setVisibility(View.VISIBLE);
+                ViewAnimationUtils.createCircularReveal(
+                        (View) detailView,
+                        (int) motionEvent.getX(),
+                        (int) motionEvent.getY(),
+                        0f,
+                        (float) Math.hypot(view.getWidth(), view.getHeight())
+                ).setDuration(1000).start();
+                overlayView.setVisibility(View.INVISIBLE);
+                return true;
+            }
+        });
+
+        detailView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                overlayView.setVisibility(View.VISIBLE);
+                ViewAnimationUtils.createCircularReveal(
+                        (View) overlayView,
+                        (int) motionEvent.getX(),
+                        (int) motionEvent.getY(),
+                        0f,
+                        (float) Math.hypot(view.getWidth(), view.getHeight())
+                ).setDuration(1000).start();
+                detailView.setVisibility(View.INVISIBLE);
+                return true;
+            }
+        });
+
+
+        return view;
     }
 }
