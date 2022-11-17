@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.michael.flashsocial.R;
@@ -19,16 +20,23 @@ import java.util.List;
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ItemHolder> {
     private List<Person> personList;
-    private IClickCallback clickCallback;
+    private IClickCallback cardClickCallback;
+    private IClickCallback btnClickCallback;
 
-    public PersonAdapter(List<Person> personList, IClickCallback clickCallback) {
+    public PersonAdapter(List<Person> personList, IClickCallback cardClickCallback, IClickCallback btnClickCallback) {
         this.personList = personList;
-        this.clickCallback = clickCallback;
+        this.cardClickCallback = cardClickCallback;
+        this.btnClickCallback = btnClickCallback;
     }
 
     public void setData(List<Person> newList) {
         personList = newList;
         notifyDataSetChanged();
+    }
+
+    public void setData(int pos, Person person) {
+        personList.set(pos, person);
+        notifyItemChanged(pos, person);
     }
 
     @NonNull
@@ -46,7 +54,14 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ItemHolder
         holder.avt.setImageBitmap(DataConverter.convertByteArrToBitmap(person.getAvatar()));
         holder.name.setText(person.getFirstName() + " " + person.getLastName());
         holder.role.setText(person.getRole());
-        holder.materialCardView.setOnClickListener(view -> clickCallback.onClickItem(person));
+        holder.materialCardView.setOnClickListener(view -> cardClickCallback.onClickItem(position, person));
+        holder.learnBtn.setOnClickListener(view -> btnClickCallback.onClickItem(position, person));
+
+        if (person.isChooseToLearn()) {
+            holder.learnBtn.setIconResource(R.drawable.ic_baseline_school_24);
+        } else {
+            holder.learnBtn.setIconResource(R.drawable.ic_outline_school_24);
+        }
     }
 
     @Override
@@ -59,6 +74,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ItemHolder
         ShapeableImageView avt;
         TextView name;
         TextView role;
+        MaterialButton learnBtn;
 
         public ItemHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +82,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ItemHolder
             avt = itemView.findViewById(R.id.holder_item_avt);
             name = itemView.findViewById(R.id.holder_item_name);
             role = itemView.findViewById(R.id.holder_item_role);
+            learnBtn = itemView.findViewById(R.id.holder_item_action);
         }
     }
 }

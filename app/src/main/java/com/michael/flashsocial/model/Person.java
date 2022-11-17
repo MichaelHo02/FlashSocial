@@ -93,4 +93,8 @@ public class Person implements Serializable {
     public void setChooseToLearn(boolean chooseToLearn) {
         this.chooseToLearn = chooseToLearn;
     }
+
+    public void toggleLearn() {
+        this.chooseToLearn = !this.chooseToLearn;
+    }
 }

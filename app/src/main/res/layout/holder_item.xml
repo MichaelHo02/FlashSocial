@@ -53,7 +53,7 @@
                     android:textColor="?android:attr/textColorSecondary" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/holder_group_action"
+                    android:id="@+id/holder_item_action"
                     style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

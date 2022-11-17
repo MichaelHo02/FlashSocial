@@ -21,6 +21,7 @@ import com.michael.flashsocial.activity.ItemDetailActivity;
 import com.michael.flashsocial.adapter.PersonAdapter;
 import com.michael.flashsocial.custom_rule.CycleRule;
 import com.michael.flashsocial.custom_rule.IClickCallback;
+import com.michael.flashsocial.database.GroupItemDB;
 import com.michael.flashsocial.database.PersonDB;
 import com.michael.flashsocial.model.Person;
 import com.michael.flashsocial.utils.NavigationUtil;
@@ -94,12 +95,16 @@ public class HomeFragment extends Fragment implements CycleRule {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         personList = getItemList();
-        personAdapter = new PersonAdapter(personList, person -> {
+        personAdapter = new PersonAdapter(personList, (pos, person) -> {
             Intent intent = new Intent(view.getContext(), ItemDetailActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("data", person);
             intent.putExtras(bundle);
             startActivityForResult(intent, RequestSignal.ITEM_DETAIL_ACTIVITY);
+        }, (pos, person) -> {
+            person.toggleLearn();
+            PersonDB.getInstance(this.getContext()).itemDao().updateItem(person);
+            personAdapter.setData(pos, person);
         });
         recyclerView.setAdapter(personAdapter);
     }
