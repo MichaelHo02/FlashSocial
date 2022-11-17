@@ -15,6 +15,7 @@ import com.michael.flashsocial.custom_rule.CycleRule;
 import com.michael.flashsocial.fragment.HomeFragment;
 import com.michael.flashsocial.fragment.LearningFragment;
 import com.michael.flashsocial.fragment.StatFragment;
+import com.michael.flashsocial.utils.NavigationUtil;
 
 public class MainActivity extends AppCompatActivity implements CycleRule {
     private NavigationBarView nbv;
@@ -46,25 +47,21 @@ public class MainActivity extends AppCompatActivity implements CycleRule {
     private void navigationInit() {
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         nbv.inflateMenu(R.menu.activity_main_bottom_navigation);
-        changeFragment(R.id.act_main_fl, homeFragment);
+        NavigationUtil.changeFragment(this, R.id.act_main_fl, homeFragment);
     }
 
     private boolean handleSelectItem(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.act_main_i1:
-                changeFragment(R.id.act_main_fl, homeFragment);
+                NavigationUtil.changeFragment(this, R.id.act_main_fl, homeFragment);
                 return true;
             case R.id.act_main_i2:
-                changeFragment(R.id.act_main_fl, learningFragment);
+                NavigationUtil.changeFragment(this, R.id.act_main_fl, learningFragment);
                 return true;
             case R.id.act_main_i3:
-                changeFragment(R.id.act_main_fl, statFragment);
+                NavigationUtil.changeFragment(this, R.id.act_main_fl, statFragment);
                 return true;
         }
         return false;
-    }
-
-    private void changeFragment(@IdRes int containerViewId, @NonNull androidx.fragment.app.Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(containerViewId, fragment).commit();
     }
 }

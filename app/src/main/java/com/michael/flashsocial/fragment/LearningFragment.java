@@ -1,19 +1,31 @@
 package com.michael.flashsocial.fragment;
 
+import android.animation.LayoutTransition;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.michael.flashsocial.R;
+import com.michael.flashsocial.database.PersonDB;
+import com.michael.flashsocial.model.Person;
+import com.michael.flashsocial.utils.NavigationUtil;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,8 +43,9 @@ public class LearningFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    MaterialCardView detailView;
-    MaterialCardView overlayView;
+    FrameLayout frameLayout;
+    MaterialButton nopeBtn;
+    MaterialButton yesBtn;
 
 
     public LearningFragment() {
@@ -71,41 +84,29 @@ public class LearningFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_learning, container, false);
-        overlayView = view.findViewById(R.id.frag_learn_overlay_card);
-        detailView = view.findViewById(R.id.frag_learn_detail_card);
-        overlayView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                detailView.setVisibility(View.VISIBLE);
-                ViewAnimationUtils.createCircularReveal(
-                        (View) detailView,
-                        (int) motionEvent.getX(),
-                        (int) motionEvent.getY(),
-                        0f,
-                        (float) Math.hypot(view.getWidth(), view.getHeight())
-                ).setDuration(1000).start();
-                overlayView.setVisibility(View.INVISIBLE);
-                return true;
-            }
-        });
 
-        detailView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                overlayView.setVisibility(View.VISIBLE);
-                ViewAnimationUtils.createCircularReveal(
-                        (View) overlayView,
-                        (int) motionEvent.getX(),
-                        (int) motionEvent.getY(),
-                        0f,
-                        (float) Math.hypot(view.getWidth(), view.getHeight())
-                ).setDuration(1000).start();
-                detailView.setVisibility(View.INVISIBLE);
-                return true;
-            }
-        });
+        nopeBtn = view.findViewById(R.id.frag_learn_nope_btn);
+        yesBtn = view.findViewById(R.id.frag_learn_yes_btn);
 
+        nopeBtn.setOnClickListener(this::handleNopeCase);
+        yesBtn.setOnClickListener(this::handleYesCase);
+
+        frameLayout = view.findViewById(R.id.frag_learning_fl);
+
+        List<Person> personList = PersonDB.getInstance(this.getContext()).itemDao().getAllChosenPeople();
+        Log.e("chosen list", String.valueOf(personList.size()));
+
+        NavigationUtil.changeFragment(this.requireActivity(), R.id.frag_learning_fl, LearningCardFragment.newInstance("a", "b"));
 
         return view;
+    }
+
+    private void handleYesCase(View view) {
+        NavigationUtil.changeFragment(this.requireActivity(), R.id.frag_learning_fl, LearningCardFragment.newInstance("a", "b"), new int[]{});
+    }
+
+    private void handleNopeCase(View view) {
+
+        NavigationUtil.changeFragment(this.requireActivity(), R.id.frag_learning_fl, LearningCardFragment.newInstance("a", "b"), new int[]{});
     }
 }

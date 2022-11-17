@@ -4,9 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
+import com.michael.flashsocial.R;
+
+import java.util.List;
 
 public class NavigationUtil {
     public static void navigateActivity(Activity activity, Context context, Class<?> cls , int reqCode, Bundle bundle) {
@@ -38,5 +46,34 @@ public class NavigationUtil {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void changeFragment(FragmentActivity fragmentActivity, @IdRes int containerViewId, @NonNull androidx.fragment.app.Fragment fragment) {
+        fragmentActivity
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(
+                        R.anim.fade_in,
+                        R.anim.fade_out,
+                        R.anim.fade_in,
+                        R.anim.fade_out
+                )
+                .replace(containerViewId, fragment)
+                .commit();
+    }
+
+    public static void changeFragment(FragmentActivity fragmentActivity, @IdRes int containerViewId, @NonNull androidx.fragment.app.Fragment fragment, int[] customAnim) {
+        Log.e("Hello", "hello");
+        fragmentActivity
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.slide_in,
+                        R.anim.slide_in,
+                        R.anim.slide_in
+                )
+                .replace(containerViewId, fragment)
+                .commit();
     }
 }

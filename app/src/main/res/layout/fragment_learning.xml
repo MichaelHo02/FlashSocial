@@ -25,40 +25,11 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
+            android:id="@+id/frag_learning_fl"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/frag_learn_overlay_card"
-                style="@style/Widget.Material3.CardView.Elevated"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:visibility="visible">
-
-                <FrameLayout
-                    android:id="@+id/frag_learn_overlay_fl"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="16dp"/>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/frag_learn_detail_card"
-                style="@style/Widget.Material3.CardView.Filled"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:visibility="invisible">
-
-                <FrameLayout
-                    android:id="@+id/frag_learn_detail_fl"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="16dp"/>
-            </com.google.android.material.card.MaterialCardView>
-        </FrameLayout>
+            android:layout_weight="1"
+            android:animateLayoutChanges="true" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
@@ -80,6 +51,7 @@
                 android:layout_weight="2" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/frag_learn_nope_btn"
                 style="@style/Widget.Material3.Button.TonalButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,6 +64,7 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/frag_learn_yes_btn"
                 style="@style/Widget.Material3.Button.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

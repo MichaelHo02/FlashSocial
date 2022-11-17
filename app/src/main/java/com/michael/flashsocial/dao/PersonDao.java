@@ -15,6 +15,9 @@ public interface PersonDao {
     @Query("select * from person")
     List<Person> getAllPeople();
 
+    @Query("select * from person where person.chooseToLearn is 1")
+    List<Person> getAllChosenPeople();
+
     @Insert
     void insertItem(Person person);
 
