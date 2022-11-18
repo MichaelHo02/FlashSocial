@@ -48,6 +48,7 @@ public class LearningFragment extends Fragment {
     private String mParam2;
 
     FrameLayout frameLayout;
+    MaterialTextView promptView;
     MaterialButton nopeBtn;
     MaterialButton yesBtn;
     MaterialButton retryBtn;
@@ -93,6 +94,7 @@ public class LearningFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_learning, container, false);
 
+        promptView = view.findViewById(R.id.frag_learn_prompt_question);
         nopeBtn = view.findViewById(R.id.frag_learn_nope_btn);
         yesBtn = view.findViewById(R.id.frag_learn_yes_btn);
         retryBtn = view.findViewById(R.id.frag_learn_retry_btn);
@@ -107,6 +109,10 @@ public class LearningFragment extends Fragment {
 
         if (personList.size() != 0) {
             chooseNewPerson();
+        } else {
+            promptView.setVisibility(View.INVISIBLE);
+            nopeBtn.setVisibility(View.INVISIBLE);
+            yesBtn.setVisibility(View.INVISIBLE);
         }
         return view;
     }
@@ -115,6 +121,9 @@ public class LearningFragment extends Fragment {
         fragment = null;
         personList = PersonDB.getInstance(this.getContext()).itemDao().getAllChosenPeople();
         if (personList.size() != 0) {
+            promptView.setVisibility(View.VISIBLE);
+            nopeBtn.setVisibility(View.VISIBLE);
+            yesBtn.setVisibility(View.VISIBLE);
             chooseNewPerson();
         } else {
             Snackbar.make(view, "The list is empty. Please add people in.", Snackbar.LENGTH_LONG)
@@ -130,6 +139,9 @@ public class LearningFragment extends Fragment {
         PersonDB.getInstance(this.getContext()).itemDao().updateItem(person);
         if (personList.size() == 0) {
             NavigationUtil.removeFragment(this.requireActivity(), fragment);
+            promptView.setVisibility(View.INVISIBLE);
+            nopeBtn.setVisibility(View.INVISIBLE);
+            yesBtn.setVisibility(View.INVISIBLE);
         } else {
             chooseNewPerson();
         }
@@ -142,6 +154,9 @@ public class LearningFragment extends Fragment {
         PersonDB.getInstance(this.getContext()).itemDao().updateItem(person);
         if (personList.size() == 0) {
             NavigationUtil.removeFragment(this.requireActivity(), fragment);
+            promptView.setVisibility(View.INVISIBLE);
+            nopeBtn.setVisibility(View.INVISIBLE);
+            yesBtn.setVisibility(View.INVISIBLE);
         } else {
             chooseNewPerson();
         }
