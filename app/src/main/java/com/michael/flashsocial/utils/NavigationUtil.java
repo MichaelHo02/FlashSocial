@@ -61,19 +61,4 @@ public class NavigationUtil {
                 .replace(containerViewId, fragment)
                 .commit();
     }
-
-    public static void changeFragment(FragmentActivity fragmentActivity, @IdRes int containerViewId, @NonNull androidx.fragment.app.Fragment fragment, int[] customAnim) {
-        Log.e("Hello", "hello");
-        fragmentActivity
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(
-                        R.anim.slide_in,
-                        R.anim.slide_in,
-                        R.anim.slide_in,
-                        R.anim.slide_in
-                )
-                .replace(containerViewId, fragment)
-                .commit();
-    }
 }

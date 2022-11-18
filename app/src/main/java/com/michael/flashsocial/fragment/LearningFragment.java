@@ -22,10 +22,13 @@ import com.google.android.material.textview.MaterialTextView;
 import com.michael.flashsocial.R;
 import com.michael.flashsocial.database.PersonDB;
 import com.michael.flashsocial.model.Person;
+import com.michael.flashsocial.utils.DataConverter;
 import com.michael.flashsocial.utils.NavigationUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +49,8 @@ public class LearningFragment extends Fragment {
     FrameLayout frameLayout;
     MaterialButton nopeBtn;
     MaterialButton yesBtn;
+
+    List<Person> personList;
 
 
     public LearningFragment() {
@@ -93,20 +98,51 @@ public class LearningFragment extends Fragment {
 
         frameLayout = view.findViewById(R.id.frag_learning_fl);
 
-        List<Person> personList = PersonDB.getInstance(this.getContext()).itemDao().getAllChosenPeople();
+        personList = PersonDB.getInstance(this.getContext()).itemDao().getAllChosenPeople();
         Log.e("chosen list", String.valueOf(personList.size()));
 
-        NavigationUtil.changeFragment(this.requireActivity(), R.id.frag_learning_fl, LearningCardFragment.newInstance("a", "b"));
-
+        chooseNewPerson();
         return view;
     }
 
     private void handleYesCase(View view) {
-        NavigationUtil.changeFragment(this.requireActivity(), R.id.frag_learning_fl, LearningCardFragment.newInstance("a", "b"), new int[]{});
+        chooseNewPerson();
     }
 
     private void handleNopeCase(View view) {
+        chooseNewPerson();
+    }
 
-        NavigationUtil.changeFragment(this.requireActivity(), R.id.frag_learning_fl, LearningCardFragment.newInstance("a", "b"), new int[]{});
+    private void chooseNewPerson() {
+        Random rand = new Random();
+        int idx = rand.nextInt(personList.size());
+        Person person = personList.get(idx);
+
+        int icon = 0;
+        String prompt = "";
+        String hint = "";
+        switch (rand.nextInt(3)) {
+            case 0:
+                icon = R.drawable.ic_baseline_cake_24;
+                prompt = "Date of birth";
+                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
+                hint = sdf.format(person.getDob());
+                break;
+            case 1:
+                icon = R.drawable.ic_baseline_business_center_24;
+                prompt = "Role";
+                hint = person.getRole();
+                break;
+            case 2:
+                icon = R.drawable.ic_baseline_star_24;
+                prompt = "Unique feature";
+                hint = person.getUniqueFeature();
+                break;
+        }
+
+        NavigationUtil.changeFragment(this.requireActivity(), R.id.frag_learning_fl, LearningCardFragment.newInstance(
+                icon, prompt, hint, person
+        ));
+//        personList.remove(idx);
     }
 }
