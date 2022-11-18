@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -41,10 +42,12 @@ public class LearningCardFragment extends Fragment implements CycleRule {
     private String mParam3;
     private Person mParam4;
 
+    private boolean hasFlipped = false;
+
     private View view;
 
-    MaterialCardView detailView;
-    MaterialCardView overlayView;
+    LinearLayout detailView;
+    LinearLayout overlayView;
 
     ShapeableImageView avtFront;
     ShapeableImageView iconFront;
@@ -57,7 +60,8 @@ public class LearningCardFragment extends Fragment implements CycleRule {
     MaterialTextView roleView;
     MaterialTextView uniqueFeatureView;
 
-    public LearningCardFragment() {}
+    public LearningCardFragment() {
+    }
 
     public static LearningCardFragment newInstance(int param1, String param2, String param3, Person param4) {
         LearningCardFragment fragment = new LearningCardFragment();
@@ -120,7 +124,6 @@ public class LearningCardFragment extends Fragment implements CycleRule {
         iconFront.setImageResource(mParam1);
         promptView.setText(mParam2);
         hintView.setText(mParam3);
-        Log.e("Line count", String.valueOf(hintView.getLineCount()));
         if (mParam3.length() < 32) {
             hintView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
@@ -134,6 +137,9 @@ public class LearningCardFragment extends Fragment implements CycleRule {
     }
 
     private boolean handleOnTouchCard(View view, MotionEvent motionEvent) {
+        Log.e("Check", String.valueOf(view.getId() == R.id.frag_learn_detail_card));
+        if (hasFlipped) return true;
+        else hasFlipped = true;
         overlayView.setVisibility(View.GONE);
         detailView.setVisibility(View.VISIBLE);
         ViewAnimationUtils.createCircularReveal(
@@ -142,7 +148,7 @@ public class LearningCardFragment extends Fragment implements CycleRule {
                 (int) motionEvent.getY(),
                 0f,
                 (float) Math.hypot(view.getWidth(), view.getHeight())
-        ).setDuration(1000).start();
-        return false;
+        ).setDuration(500).start();
+        return true;
     }
 }

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.LearningCardFragment">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/frag_learn_overlay_card"
         style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp">
+
         <LinearLayout
+            android:id="@+id/frag_learn_overlay_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -80,26 +81,18 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/click_to_see_further_detail"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                android:text="@string/click_to_see_further_detail" />
+                android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/frag_learn_detail_card"
-        style="@style/Widget.Material3.CardView.Filled"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        android:visibility="invisible">
-
         <LinearLayout
+            android:id="@+id/frag_learn_detail_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:visibility="invisible">
 
             <RelativeLayout
                 android:layout_width="match_parent"

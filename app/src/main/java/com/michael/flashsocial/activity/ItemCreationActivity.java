@@ -281,7 +281,7 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
                         Intent intent = getIntent().putExtras(bundle);
                         navigateBack(intent);
                     } else {
-                        person = new Person(fName, lname, dob, avt, role, uniqueFeature, false);
+                        person = new Person(fName, lname, dob, avt, role, uniqueFeature, false, 0, 0);
                         PersonDB.getInstance(this).itemDao().insertItem(person);
                         navigateBack(getIntent());
                     }

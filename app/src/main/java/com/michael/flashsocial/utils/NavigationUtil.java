@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.IdRes;
@@ -13,8 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.michael.flashsocial.R;
-
-import java.util.List;
 
 public class NavigationUtil {
     public static void navigateActivity(Activity activity, Context context, Class<?> cls , int reqCode, Bundle bundle) {
@@ -48,7 +45,7 @@ public class NavigationUtil {
         }
     }
 
-    public static void changeFragment(FragmentActivity fragmentActivity, @IdRes int containerViewId, @NonNull androidx.fragment.app.Fragment fragment) {
+    public static void changeFragment(FragmentActivity fragmentActivity, @IdRes int containerViewId, @NonNull Fragment fragment) {
         fragmentActivity
                 .getSupportFragmentManager()
                 .beginTransaction()
@@ -59,6 +56,14 @@ public class NavigationUtil {
                         R.anim.fade_out
                 )
                 .replace(containerViewId, fragment)
+                .commit();
+    }
+
+    public static void removeFragment(FragmentActivity fragmentActivity, @NonNull Fragment fragment) {
+        fragmentActivity
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .remove(fragment)
                 .commit();
     }
 }

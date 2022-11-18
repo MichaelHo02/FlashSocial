@@ -19,8 +19,10 @@ public class Person implements Serializable {
     private String role;
     private String uniqueFeature;
     private boolean chooseToLearn;
+    private int correctGuess;
+    private int incorrectGuess;
 
-    public Person(String firstName, String lastName, long dob, byte[] avatar, String role, String uniqueFeature, boolean chooseToLearn) {
+    public Person(String firstName, String lastName, long dob, byte[] avatar, String role, String uniqueFeature, boolean chooseToLearn, int correctGuess, int incorrectGuess) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
@@ -28,6 +30,8 @@ public class Person implements Serializable {
         this.role = role;
         this.uniqueFeature = uniqueFeature;
         this.chooseToLearn = chooseToLearn;
+        this.correctGuess = correctGuess;
+        this.incorrectGuess = incorrectGuess;
     }
 
     public int getId() {
@@ -96,5 +100,29 @@ public class Person implements Serializable {
 
     public void toggleLearn() {
         this.chooseToLearn = !this.chooseToLearn;
+    }
+
+    public int getCorrectGuess() {
+        return correctGuess;
+    }
+
+    public void setCorrectGuess(int correctGuess) {
+        this.correctGuess = correctGuess;
+    }
+
+    public void incrementCorrectGuess() {
+        correctGuess++;
+    }
+
+    public int getIncorrectGuess() {
+        return incorrectGuess;
+    }
+
+    public void setIncorrectGuess(int incorrectGuess) {
+        this.incorrectGuess = incorrectGuess;
+    }
+
+    public void incrementIncorrectGuess() {
+        incorrectGuess--;
     }
 }

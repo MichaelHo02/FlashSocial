@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 import com.michael.flashsocial.R;
 import com.michael.flashsocial.database.PersonDB;
@@ -49,9 +50,11 @@ public class LearningFragment extends Fragment {
     FrameLayout frameLayout;
     MaterialButton nopeBtn;
     MaterialButton yesBtn;
+    MaterialButton retryBtn;
 
     List<Person> personList;
-
+    Person person;
+    Fragment fragment;
 
     public LearningFragment() {
         // Required empty public constructor
@@ -92,31 +95,62 @@ public class LearningFragment extends Fragment {
 
         nopeBtn = view.findViewById(R.id.frag_learn_nope_btn);
         yesBtn = view.findViewById(R.id.frag_learn_yes_btn);
+        retryBtn = view.findViewById(R.id.frag_learn_retry_btn);
 
         nopeBtn.setOnClickListener(this::handleNopeCase);
         yesBtn.setOnClickListener(this::handleYesCase);
+        retryBtn.setOnClickListener(this::handleRetryCase);
 
         frameLayout = view.findViewById(R.id.frag_learning_fl);
 
         personList = PersonDB.getInstance(this.getContext()).itemDao().getAllChosenPeople();
-        Log.e("chosen list", String.valueOf(personList.size()));
 
-        chooseNewPerson();
+        if (personList.size() != 0) {
+            chooseNewPerson();
+        }
         return view;
     }
 
+    private void handleRetryCase(View view) {
+        fragment = null;
+        personList = PersonDB.getInstance(this.getContext()).itemDao().getAllChosenPeople();
+        if (personList.size() != 0) {
+            chooseNewPerson();
+        } else {
+            Snackbar.make(view, "The list is empty. Please add people in.", Snackbar.LENGTH_LONG)
+                    .setAnchorView(R.id.frag_learn_prompt_question)
+                    .show();
+        }
+    }
+
     private void handleYesCase(View view) {
-        chooseNewPerson();
+        if (person != null) {
+            person.incrementCorrectGuess();
+        }
+        PersonDB.getInstance(this.getContext()).itemDao().updateItem(person);
+        if (personList.size() == 0) {
+            NavigationUtil.removeFragment(this.requireActivity(), fragment);
+        } else {
+            chooseNewPerson();
+        }
     }
 
     private void handleNopeCase(View view) {
-        chooseNewPerson();
+        if (person != null) {
+            person.incrementIncorrectGuess();
+        }
+        PersonDB.getInstance(this.getContext()).itemDao().updateItem(person);
+        if (personList.size() == 0) {
+            NavigationUtil.removeFragment(this.requireActivity(), fragment);
+        } else {
+            chooseNewPerson();
+        }
     }
 
     private void chooseNewPerson() {
         Random rand = new Random();
         int idx = rand.nextInt(personList.size());
-        Person person = personList.get(idx);
+        person = personList.get(idx);
 
         int icon = 0;
         String prompt = "";
@@ -140,9 +174,10 @@ public class LearningFragment extends Fragment {
                 break;
         }
 
-        NavigationUtil.changeFragment(this.requireActivity(), R.id.frag_learning_fl, LearningCardFragment.newInstance(
+        fragment = LearningCardFragment.newInstance(
                 icon, prompt, hint, person
-        ));
-//        personList.remove(idx);
+        );
+        NavigationUtil.changeFragment(this.requireActivity(), R.id.frag_learning_fl, fragment);
+        personList.remove(idx);
     }
 }
