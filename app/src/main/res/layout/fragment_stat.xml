@@ -24,160 +24,213 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
+            android:layout_height="wrap_content">
             <LinearLayout
+                android:id="@+id/frag_stat_linear_layout_1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="16dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Total cards you have learn:"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="invisible">
 
                 <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/frag_stat_text_view_1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="12 cards"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                    android:padding="8dp"
+                    android:text="The learning list is currently empty."
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="No data to analyze."
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/frag_stat_linear_layout_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="16dp">
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total cards you have learn:"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/frag_stat_text_view_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12 cards"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total number of correct guess:"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/frag_stat_text_view_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12 guesses"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Highest accuracy rate:"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/frag_stat_text_view_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nguyen Thi Minh Khai"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lowest accuracy rate:"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/frag_stat_text_view_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ho Le Minh Thach"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Average accuracy rate:"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/frag_stat_text_view_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="80%"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                </LinearLayout>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Total number of correct guess:"
+                    android:paddingVertical="16dp"
+                    android:text="Top 5 people with highest accuracy rate"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/frag_stat_rv_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="-16dp"
+                    android:paddingVertical="16dp" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/frag_stat_text_view_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="12 guesses"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="16dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Highest accuracy rate:"
+                    android:paddingVertical="16dp"
+                    android:text="Top 5 people with lowest accuracy rate"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/frag_stat_text_view_3"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/frag_stat_rv_2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nguyen Thi Minh Khai"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+                    android:paddingHorizontal="-16dp"
+                    android:paddingVertical="16dp" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="16dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lowest accuracy rate:"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/frag_stat_text_view_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ho Le Minh Thach"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="16dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Average accuracy rate:"
-                    android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/frag_stat_text_view_5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="80%"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
-            </LinearLayout>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Top 5 people with highest accuracy rate"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/frag_stat_text_view_6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="16dp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Top 5 people with lowest accuracy rate"
-                android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/frag_stat_text_view_7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="16dp" />
-        </LinearLayout>
+        </FrameLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

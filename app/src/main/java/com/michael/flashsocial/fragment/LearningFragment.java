@@ -127,7 +127,6 @@ public class LearningFragment extends Fragment {
             chooseNewPerson();
         } else {
             Snackbar.make(view, "The list is empty. Please add people in.", Snackbar.LENGTH_LONG)
-                    .setAnchorView(R.id.frag_learn_prompt_question)
                     .show();
         }
     }

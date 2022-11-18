@@ -3,19 +3,23 @@ package com.michael.flashsocial.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.android.material.textview.MaterialTextView;
 import com.michael.flashsocial.R;
+import com.michael.flashsocial.adapter.PersonAdapter;
 import com.michael.flashsocial.database.PersonDB;
 import com.michael.flashsocial.model.Person;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,13 +37,17 @@ public class StatFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    LinearLayout linearLayout1;
+    LinearLayout linearLayout2;
     MaterialTextView textView1;
     MaterialTextView textView2;
     MaterialTextView textView3;
     MaterialTextView textView4;
     MaterialTextView textView5;
-    RecyclerView textView6;
-    RecyclerView textView7;
+    RecyclerView rv1;
+    RecyclerView rv2;
+    PersonAdapter personAdapter1;
+    PersonAdapter personAdapter2;
 
     public StatFragment() {
         // Required empty public constructor
@@ -77,17 +85,20 @@ public class StatFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_stat, container, false);
-
+        linearLayout1 = view.findViewById(R.id.frag_stat_linear_layout_1);
+        linearLayout2 = view.findViewById(R.id.frag_stat_linear_layout_2);
         textView1 = view.findViewById(R.id.frag_stat_text_view_1);
         textView2 = view.findViewById(R.id.frag_stat_text_view_2);
         textView3 = view.findViewById(R.id.frag_stat_text_view_3);
         textView4 = view.findViewById(R.id.frag_stat_text_view_4);
         textView5 = view.findViewById(R.id.frag_stat_text_view_5);
-        textView6 = view.findViewById(R.id.frag_stat_text_view_6);
-        textView7 = view.findViewById(R.id.frag_stat_text_view_7);
+        rv1 = view.findViewById(R.id.frag_stat_rv_1);
+        rv2 = view.findViewById(R.id.frag_stat_rv_2);
 
         List<Person> personList = PersonDB.getInstance(this.getContext()).itemDao().getAllChosenPeople();
         if (personList.isEmpty()) {
+            linearLayout1.setVisibility(View.VISIBLE);
+            linearLayout2.setVisibility(View.INVISIBLE);
             return view;
         }
 
@@ -95,6 +106,8 @@ public class StatFragment extends Fragment {
         textView1.setText(totalGuess + " cards");
 
         if (totalGuess < 1) {
+            linearLayout1.setVisibility(View.VISIBLE);
+            linearLayout2.setVisibility(View.INVISIBLE);
             return view;
         }
 
@@ -109,6 +122,24 @@ public class StatFragment extends Fragment {
 
         int avgAccuracy = totalRightGuess * 100 / totalGuess;
         textView5.setText(avgAccuracy + "%");
+
+        List<Person> personTopList = personList
+                .stream()
+                .sorted(Comparator.comparingInt(Person::getCorrectGuess).reversed())
+                .collect(Collectors.toList())
+                .subList(0, Math.min(personList.size(), 5));
+        List<Person> personBottomList = personList
+                .stream()
+                .sorted(Comparator.comparingInt(Person::getCorrectGuess))
+                .collect(Collectors.toList())
+                .subList(0, Math.min(personList.size(), 5));
+        personAdapter1 = new PersonAdapter(personTopList, ((pos, person) -> {}), (pos, person) -> {});
+        personAdapter2 = new PersonAdapter(personBottomList, ((pos, person) -> {}), (pos, person) -> {});
+        rv1.setAdapter(personAdapter1);
+        rv2.setAdapter(personAdapter2);
+
+        rv1.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        rv2.setLayoutManager(new LinearLayoutManager(view.getContext()));
         return view;
     }
 }
