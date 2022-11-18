@@ -267,13 +267,12 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
                 } else {
 //                    NavigationUtil.hideSoftKeyboard(this);
                     if (isUpdate) {
-                        person.setFirstName(fName);
-                        person.setLastName(lname);
+                        person.setFirstName(fName.trim());
+                        person.setLastName(lname.trim());
                         person.setDob(dob);
-                        Log.e("dob", dobInput.getText().toString());
                         person.setAvatar(avt);
-                        person.setRole(role);
-                        person.setUniqueFeature(uniqueFeature);
+                        person.setRole(role.trim());
+                        person.setUniqueFeature(uniqueFeature.trim());
 
                         Bundle bundle = new Bundle();
                         PersonDB.getInstance(this).itemDao().updateItem(person);

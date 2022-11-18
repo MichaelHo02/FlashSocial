@@ -123,6 +123,6 @@ public class Person implements Serializable {
     }
 
     public void incrementIncorrectGuess() {
-        incorrectGuess--;
+        incorrectGuess++;
     }
 }
