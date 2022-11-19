@@ -30,4 +30,6 @@ public interface PersonDao {
     @Query("select person.role from person")
     List<String> getAllUniqueRole();
 
+    @Query("DELETE FROM person")
+    void deleteAll();
 }

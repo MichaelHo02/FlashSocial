@@ -3,9 +3,11 @@ package com.michael.flashsocial.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,11 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 import com.michael.flashsocial.R;
 import com.michael.flashsocial.custom_rule.CycleRule;
+import com.michael.flashsocial.database.PersonDB;
 import com.michael.flashsocial.model.Person;
 import com.michael.flashsocial.utils.DataConverter;
 import com.michael.flashsocial.utils.NavigationUtil;
@@ -86,13 +90,23 @@ public class ItemDetailActivity extends AppCompatActivity implements CycleRule {
         switch (item.getItemId()) {
             case R.id.act_item_detail_edit:
                 return navigateEditItem();
-            case R.id.act_item_detail_setting:
-                return navigateSetting();
+            case R.id.act_item_detail_delete:
+                return handleDelete();
         }
         return false;
     }
 
-    private boolean navigateSetting() {
+    private boolean handleDelete() {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Delete Item")
+                .setMessage("Do you want to delete item? You cannot undo the action.")
+                .setNegativeButton("Cancel", ((dialogInterface, i) -> {
+                }))
+                .setPositiveButton("Delete", (((dialogInterface, i) -> {
+                    PersonDB.getInstance(this).itemDao().deleteItem(person);
+                    navigateBack(getIntent());
+                })))
+                .show();
         return true;
     }
 
