@@ -20,8 +20,6 @@ import com.michael.flashsocial.activity.ItemCreationActivity;
 import com.michael.flashsocial.activity.ItemDetailActivity;
 import com.michael.flashsocial.adapter.PersonAdapter;
 import com.michael.flashsocial.custom_rule.CycleRule;
-import com.michael.flashsocial.custom_rule.IClickCallback;
-import com.michael.flashsocial.database.GroupItemDB;
 import com.michael.flashsocial.database.PersonDB;
 import com.michael.flashsocial.model.Person;
 import com.michael.flashsocial.utils.NavigationUtil;
