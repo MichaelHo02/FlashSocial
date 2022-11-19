@@ -29,13 +29,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activity.FolderCreationActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>

@@ -10,5 +10,6 @@
         android:id="@+id/frag_home_add"
         android:title="@string/add_item"
         android:icon="@drawable/ic_baseline_note_add_24"
+        app:iconTint="?attr/colorOnSurface"
         app:showAsAction="ifRoom" />
 </menu>

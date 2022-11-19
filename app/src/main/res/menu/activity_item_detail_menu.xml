@@ -10,5 +10,6 @@
         android:id="@+id/act_item_detail_edit"
         android:title="@string/add_item"
         android:icon="@drawable/ic_baseline_create_24"
+        app:iconTint="?attr/colorOnSurface"
         app:showAsAction="ifRoom" />
 </menu>

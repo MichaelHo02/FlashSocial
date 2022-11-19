@@ -22,11 +22,20 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ItemHolder
     private List<Person> personList;
     private IClickCallback cardClickCallback;
     private IClickCallback btnClickCallback;
+    private boolean showBtn;
 
     public PersonAdapter(List<Person> personList, IClickCallback cardClickCallback, IClickCallback btnClickCallback) {
         this.personList = personList;
         this.cardClickCallback = cardClickCallback;
         this.btnClickCallback = btnClickCallback;
+        this.showBtn = true;
+    }
+
+    public PersonAdapter(List<Person> personList, IClickCallback cardClickCallback, IClickCallback btnClickCallback, boolean showBtn) {
+        this.personList = personList;
+        this.cardClickCallback = cardClickCallback;
+        this.btnClickCallback = btnClickCallback;
+        this.showBtn = showBtn;
     }
 
     public void setData(List<Person> newList) {
@@ -56,7 +65,10 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ItemHolder
         holder.role.setText(person.getRole());
         holder.materialCardView.setOnClickListener(view -> cardClickCallback.onClickItem(position, person));
         holder.learnBtn.setOnClickListener(view -> btnClickCallback.onClickItem(position, person));
-
+        if (!showBtn) {
+            holder.learnBtn.setVisibility(View.INVISIBLE);
+            holder.materialCardView.setClickable(false);
+        }
         if (person.isChooseToLearn()) {
             holder.learnBtn.setIconResource(R.drawable.ic_baseline_school_24);
         } else {

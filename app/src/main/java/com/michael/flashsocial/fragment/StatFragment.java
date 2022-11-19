@@ -133,8 +133,8 @@ public class StatFragment extends Fragment {
                 .sorted(Comparator.comparingInt(Person::getCorrectGuess))
                 .collect(Collectors.toList())
                 .subList(0, Math.min(personList.size(), 5));
-        personAdapter1 = new PersonAdapter(personTopList, ((pos, person) -> {}), (pos, person) -> {});
-        personAdapter2 = new PersonAdapter(personBottomList, ((pos, person) -> {}), (pos, person) -> {});
+        personAdapter1 = new PersonAdapter(personTopList, ((pos, person) -> {}), (pos, person) -> {}, false);
+        personAdapter2 = new PersonAdapter(personBottomList, ((pos, person) -> {}), (pos, person) -> {}, false);
         rv1.setAdapter(personAdapter1);
         rv2.setAdapter(personAdapter2);
 

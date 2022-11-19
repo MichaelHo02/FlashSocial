@@ -25,7 +25,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
                 app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/ic_baseline_arrow_back_24" />
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+                app:navigationIconTint="?attr/colorOnSurface" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -47,13 +48,21 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerInParent="true"
+                    android:tint="?attr/colorOnSurface"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+                    app:srcCompat="@drawable/ic_twotone_image_24" />
+
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/act_item_detail_avt"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_centerInParent="true"
                     android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-                    app:srcCompat="@drawable/ic_twotone_image_24" />
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
             </RelativeLayout>
 
             <LinearLayout
@@ -67,11 +76,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:padding="8dp"
-                    android:src="@drawable/ic_baseline_person_24" />
+                    android:src="@drawable/ic_baseline_person_24"
+                    android:tint="?attr/colorOnSurface" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/act_item_detail_full_name"
@@ -96,7 +106,8 @@
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_bar_chart_24" />
+                    android:src="@drawable/ic_baseline_bar_chart_24"
+                    android:tint="?attr/colorOnSurface" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -128,7 +139,8 @@
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_cake_24" />
+                    android:src="@drawable/ic_baseline_cake_24"
+                    android:tint="?attr/colorOnSurface" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -161,7 +173,8 @@
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_business_center_24" />
+                    android:src="@drawable/ic_baseline_business_center_24"
+                    android:tint="?attr/colorOnSurface" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -200,7 +213,8 @@
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_star_24" />
+                    android:src="@drawable/ic_baseline_star_24"
+                    android:tint="?attr/colorOnSurface" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
