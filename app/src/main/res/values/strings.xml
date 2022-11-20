@@ -4,7 +4,7 @@
     <string name="nav_learning">Learning</string>
     <string name="nav_stat">Stat</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="add_item">Add Item</string>
+    <string name="add_item">Add Person</string>
     <string name="setting">Setting</string>
     <string name="folder_name">Folder Name</string>
     <string name="submit">Submit</string>

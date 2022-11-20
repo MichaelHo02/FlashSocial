@@ -18,7 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_baseline_close_24"
             app:navigationIconTint="?attr/colorOnSurface"
-            app:title="Create User" />
+            app:title="Create Person" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
