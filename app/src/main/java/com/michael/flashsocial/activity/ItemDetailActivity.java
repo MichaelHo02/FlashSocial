@@ -62,8 +62,12 @@ public class ItemDetailActivity extends AppCompatActivity implements CycleRule {
         dobView.setText(sdf.format(person.getDob()));
         roleView.setText(person.getRole());
         uniqueFeatureView.setText(person.getUniqueFeature());
-        int accuracy = person.getCorrectGuess() * 100 / (person.getCorrectGuess() + person.getIncorrectGuess());
-        accuracyView.setText(accuracy + "%");
+        try {
+            int accuracy = person.getCorrectGuess() * 100 / (person.getCorrectGuess() + person.getIncorrectGuess());
+            accuracyView.setText(accuracy + "%");
+        } catch (Exception e) {
+            Snackbar.make(findViewById(R.id.nestedScrollView), "This person doesn't have accuracy rate", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override

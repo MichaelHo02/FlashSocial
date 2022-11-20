@@ -210,7 +210,6 @@
                     android:id="@+id/frag_stat_rv_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="-16dp"
                     android:paddingVertical="16dp" />
 
                 <com.google.android.material.divider.MaterialDivider
@@ -229,7 +228,6 @@
                     android:id="@+id/frag_stat_rv_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
                     android:paddingVertical="16dp" />
             </LinearLayout>
         </FrameLayout>
