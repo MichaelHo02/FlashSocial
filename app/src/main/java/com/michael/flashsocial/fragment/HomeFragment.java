@@ -138,10 +138,10 @@ public class HomeFragment extends Fragment implements CycleRule {
     private ItemTouchHelper.SimpleCallback setItemTouchHelper(int swipeDirs) {
         return new ItemTouchHelper.SimpleCallback(0, swipeDirs) {
             private final int limitScrollX = dipToPx(requireActivity());
-            private int currentScrollX = 0;
-            private int getCurrentScrollXInActive = 0;
-            private int initXWhenInActive = 0;
-            private boolean firstInActive = false;
+            private int curScrollX = 0;
+            private int curScrollXActive = 0;
+            private int initXWhenActive = 0;
+            private boolean isActive = false;
 
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -165,12 +165,12 @@ public class HomeFragment extends Fragment implements CycleRule {
             public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                     if (dX == 0) {
-                        currentScrollX = viewHolder.itemView.getScrollX();
-                        firstInActive = true;
+                        curScrollX = viewHolder.itemView.getScrollX();
+                        isActive = true;
                     }
 
                     if (isCurrentlyActive) {
-                        int scrollOffset = currentScrollX + ((int) -dX);
+                        int scrollOffset = curScrollX + ((int) -dX);
                         if (scrollOffset > limitScrollX) {
                             scrollOffset = limitScrollX;
                         } else if (scrollOffset < 0) {
@@ -178,14 +178,14 @@ public class HomeFragment extends Fragment implements CycleRule {
                         }
                         viewHolder.itemView.scrollTo(scrollOffset, 0);
                     } else {
-                        if (firstInActive) {
-                            firstInActive = false;
-                            getCurrentScrollXInActive = viewHolder.itemView.getScrollX();
-                            initXWhenInActive = (int) dX;
+                        if (isActive) {
+                            isActive = false;
+                            curScrollXActive = viewHolder.itemView.getScrollX();
+                            initXWhenActive = (int) dX;
                         }
 
                         if (viewHolder.itemView.getScrollX() < limitScrollX) {
-                            viewHolder.itemView.scrollTo((int) (getCurrentScrollXInActive * dX / initXWhenInActive), 0);
+                            viewHolder.itemView.scrollTo((int) (curScrollXActive * dX / initXWhenActive), 0);
                         }
                     }
                 }
