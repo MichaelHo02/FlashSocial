@@ -45,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="The learning list is currently empty."
+                    android:text="@string/the_learning_list_is_currently_empty"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Do you want to reload again?"
+                    android:text="@string/do_you_want_to_reload_again"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
@@ -67,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="Retry"
+                        android:text="@string/retry"
                         app:icon="@drawable/ic_baseline_autorenew_24" />
                 </RelativeLayout>
 

@@ -13,17 +13,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.ActionMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.view.WindowInsets;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.snackbar.Snackbar;
@@ -42,15 +35,6 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements CycleRule {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private RecyclerView recyclerView;
     private MaterialToolbar materialToolbar;
     private View view;
@@ -58,11 +42,9 @@ public class HomeFragment extends Fragment implements CycleRule {
     private List<Person> personList;
     private PersonAdapter personAdapter;
 
-    public static HomeFragment newInstance(String param1, String param2) {
+    public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,10 +53,6 @@ public class HomeFragment extends Fragment implements CycleRule {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -118,12 +96,12 @@ public class HomeFragment extends Fragment implements CycleRule {
             personAdapter.setData(pos, person);
         }, ((pos, person) -> {
             PersonDB.getInstance(this.getContext()).itemDao().deleteItem(person);
-            personAdapter.setData(pos);
+            personAdapter.setData(person);
             Snackbar.make(view, "Item successfully removed!", Snackbar.LENGTH_LONG).show();
         }));
         recyclerView.setAdapter(personAdapter);
-        new ItemTouchHelper(setItemTouchHelper(0, ItemTouchHelper.LEFT)).attachToRecyclerView(recyclerView);
-        new ItemTouchHelper(setItemTouchHelper(0, ItemTouchHelper.RIGHT)).attachToRecyclerView(recyclerView);
+        new ItemTouchHelper(setItemTouchHelper(ItemTouchHelper.LEFT)).attachToRecyclerView(recyclerView);
+        new ItemTouchHelper(setItemTouchHelper(ItemTouchHelper.RIGHT)).attachToRecyclerView(recyclerView);
 
     }
 
@@ -157,9 +135,9 @@ public class HomeFragment extends Fragment implements CycleRule {
         return PersonDB.getInstance(this.getContext()).itemDao().getAllPeople();
     }
 
-    private ItemTouchHelper.SimpleCallback setItemTouchHelper(int dragDirs, int swipeDirs) {
-        return new ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
-            private int limitScrollX = dipToPx(100, requireActivity());
+    private ItemTouchHelper.SimpleCallback setItemTouchHelper(int swipeDirs) {
+        return new ItemTouchHelper.SimpleCallback(0, swipeDirs) {
+            private final int limitScrollX = dipToPx(requireActivity());
             private int currentScrollX = 0;
             private int getCurrentScrollXInActive = 0;
             private int initXWhenInActive = 0;
@@ -171,9 +149,7 @@ public class HomeFragment extends Fragment implements CycleRule {
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-            }
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {}
 
             @Override
             public float getSwipeThreshold(@NonNull RecyclerView.ViewHolder viewHolder) {
@@ -225,8 +201,8 @@ public class HomeFragment extends Fragment implements CycleRule {
                 }
             }
 
-            private int dipToPx(float dipValue, Context context) {
-                return (int) (dipValue * context.getResources().getDisplayMetrics().density);
+            private int dipToPx(Context context) {
+                return (int) ((float) 100 * context.getResources().getDisplayMetrics().density);
             }
         };
     }

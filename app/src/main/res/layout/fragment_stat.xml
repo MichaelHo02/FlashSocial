@@ -27,6 +27,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <LinearLayout
                 android:id="@+id/frag_stat_linear_layout_1"
                 android:layout_width="match_parent"
@@ -43,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="The learning list is currently empty."
+                    android:text="@string/the_learning_list_is_currently_empty"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
@@ -51,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="No data to analyze."
+                    android:text="@string/no_data_to_analyze"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
@@ -77,7 +78,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total cards you have learn:"
+                        android:text="@string/total_cards_you_have_learn"
                         android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                     <Space
@@ -89,7 +90,7 @@
                         android:id="@+id/frag_stat_text_view_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12 cards"
+                        android:text="@string/n_a"
                         android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
                 </LinearLayout>
 
@@ -102,7 +103,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total number of correct guess:"
+                        android:text="@string/total_number_of_correct_guess"
                         android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                     <Space
@@ -114,7 +115,7 @@
                         android:id="@+id/frag_stat_text_view_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12 guesses"
+                        android:text="@string/n_a"
                         android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
                 </LinearLayout>
 
@@ -127,7 +128,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Highest accuracy rate:"
+                        android:text="@string/highest_accuracy_rate"
                         android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                     <Space
@@ -139,7 +140,7 @@
                         android:id="@+id/frag_stat_text_view_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nguyen Thi Minh Khai"
+                        android:text="@string/n_a"
                         android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
                 </LinearLayout>
 
@@ -152,7 +153,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Lowest accuracy rate:"
+                        android:text="@string/lowest_accuracy_rate"
                         android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                     <Space
@@ -164,7 +165,7 @@
                         android:id="@+id/frag_stat_text_view_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ho Le Minh Thach"
+                        android:text="@string/n_a"
                         android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
                 </LinearLayout>
 
@@ -177,7 +178,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Average accuracy rate:"
+                        android:text="@string/average_accuracy_rate"
                         android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                     <Space
@@ -189,7 +190,7 @@
                         android:id="@+id/frag_stat_text_view_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="80%"
+                        android:text="@string/n_a"
                         android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
                 </LinearLayout>
 
@@ -202,7 +203,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="16dp"
-                    android:text="Top 5 people with highest accuracy rate"
+                    android:text="@string/top_5_people_with_highest_accuracy_rate"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -221,14 +222,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="16dp"
-                    android:text="Top 5 people with lowest accuracy rate"
+                    android:text="@string/top_5_people_with_lowest_accuracy_rate"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/frag_stat_rv_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="-16dp"
+                    android:paddingHorizontal="16dp"
                     android:paddingVertical="16dp" />
             </LinearLayout>
         </FrameLayout>

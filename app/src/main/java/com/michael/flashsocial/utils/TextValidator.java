@@ -3,8 +3,9 @@ package com.michael.flashsocial.utils;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Objects;
 
 public abstract class TextValidator implements TextWatcher {
     private final TextInputLayout textInputLayout;
@@ -23,7 +24,7 @@ public abstract class TextValidator implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        String text = textInputLayout.getEditText().getText().toString();
+        String text = Objects.requireNonNull(textInputLayout.getEditText()).getText().toString();
         validate(textInputLayout, text);
     }
 }

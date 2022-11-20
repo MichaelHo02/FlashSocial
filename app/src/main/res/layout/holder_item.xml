@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="16dp"
@@ -12,6 +11,7 @@
         style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
         android:clickable="true"
         android:focusable="true">
 
@@ -26,8 +26,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="30"
                 android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-                app:srcCompat="@drawable/michael" />
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -40,7 +39,6 @@
                     android:id="@+id/holder_item_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Michael Ho"
                     android:textAppearance="?attr/textAppearanceTitleSmall" />
 
                 <TextView
@@ -48,7 +46,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Accuracy: 40%"
                     android:textAppearance="?attr/textAppearanceBodySmall"
                     android:textColor="?android:attr/textColorSecondary" />
 
@@ -69,6 +66,7 @@
         android:layout_width="92dp"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="8dp"
         android:background="?attr/colorAccent"
         android:src="@drawable/ic_baseline_delete_24"
         android:tint="?attr/colorSurface"

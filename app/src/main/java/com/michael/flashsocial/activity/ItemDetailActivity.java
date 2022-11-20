@@ -1,18 +1,16 @@
 package com.michael.flashsocial.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -64,6 +62,8 @@ public class ItemDetailActivity extends AppCompatActivity implements CycleRule {
         dobView.setText(sdf.format(person.getDob()));
         roleView.setText(person.getRole());
         uniqueFeatureView.setText(person.getUniqueFeature());
+        int accuracy = person.getCorrectGuess() * 100 / (person.getCorrectGuess() + person.getIncorrectGuess());
+        accuracyView.setText(accuracy + "%");
     }
 
     @Override

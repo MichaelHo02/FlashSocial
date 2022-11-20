@@ -22,6 +22,6 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-        android:text="Welcome back to FlashSocial" />
+        android:text="@string/welcome_back_to_flashsocial" />
 
 </LinearLayout>

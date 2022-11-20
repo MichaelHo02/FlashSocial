@@ -56,7 +56,6 @@
                     android:id="@+id/frag_learn_icon_front"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_baseline_star_24"
                     android:tint="?attr/colorOnSurface" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -64,7 +63,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Unique feature"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                 <Space
@@ -79,7 +77,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
-                android:text="He love to take care of cat on the street."
                 android:textAppearance="?attr/textAppearanceBodyLarge" />
 
             <Space
@@ -148,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Thach, Ho Le Minh"
+                    android:text="@string/n_a"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                 <Space
@@ -173,7 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Date of birth:"
+                    android:text="@string/date_of_birth"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 <Space
@@ -186,7 +183,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Mar 22, 2022"
+                    android:text="@string/n_a"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
             </LinearLayout>
 
@@ -207,7 +204,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Role:"
+                    android:text="@string/role"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 <Space
@@ -220,7 +217,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Teacher"
+                    android:text="@string/n_a"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
 
             </LinearLayout>
@@ -247,7 +244,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Unique feature:"
+                    android:text="@string/unique_feature"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 <Space
@@ -262,7 +259,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
-                android:text="He love to take care of cat on the street."
+                android:text="@string/n_a"
                 android:textAppearance="?attr/textAppearanceBodyLarge" />
 
         </LinearLayout>

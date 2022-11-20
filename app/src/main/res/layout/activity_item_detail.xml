@@ -51,8 +51,8 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_centerInParent="true"
-                    android:tint="?attr/colorOnSurface"
                     android:scaleType="centerCrop"
+                    android:tint="?attr/colorOnSurface"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
                     app:srcCompat="@drawable/ic_twotone_image_24" />
 
@@ -88,7 +88,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Thach, Ho Le Minh"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                 <Space
@@ -113,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Accuracy:"
+                    android:text="@string/accuracy"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 <Space
@@ -126,7 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="80%"
+                    android:text="@string/n_a"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
             </LinearLayout>
 
@@ -146,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Date of birth:"
+                    android:text="@string/date_of_birth"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 <Space
@@ -159,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Mar 22, 2022"
+                    android:text="@string/n_a"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
             </LinearLayout>
 
@@ -180,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Role:"
+                    android:text="@string/role"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 <Space
@@ -193,7 +192,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Teacher"
+                    android:text="@string/n_a"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
 
             </LinearLayout>
@@ -220,7 +219,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:text="Unique feature:"
+                    android:text="@string/unique_feature"
                     android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 <Space
@@ -235,7 +234,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
-                android:text="He love to take care of cat on the street."
+                android:text="@string/n_a"
                 android:textAppearance="?attr/textAppearanceBodyLarge" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

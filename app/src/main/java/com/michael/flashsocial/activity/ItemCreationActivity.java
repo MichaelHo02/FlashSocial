@@ -1,9 +1,5 @@
 package com.michael.flashsocial.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -12,13 +8,14 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
@@ -30,24 +27,17 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.android.material.textview.MaterialTextView;
 import com.michael.flashsocial.R;
 import com.michael.flashsocial.custom_rule.CycleRule;
 import com.michael.flashsocial.database.PersonDB;
-import com.michael.flashsocial.utils.DataConverter;
 import com.michael.flashsocial.model.Person;
-import com.michael.flashsocial.utils.NavigationUtil;
+import com.michael.flashsocial.utils.DataConverter;
 import com.michael.flashsocial.utils.RequestSignal;
 import com.michael.flashsocial.utils.TextValidator;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -105,7 +95,6 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
 
             isUpdate = (boolean) bundle.get("isUpdate");
         } catch (Exception e) {
-//            Snackbar.make(findViewById(R.id.act_item_creation_submit_btn), "Cannot render chosen person", Snackbar.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -265,7 +254,6 @@ public class ItemCreationActivity extends AppCompatActivity implements CycleRule
                 if (fName.isEmpty() || lname.isEmpty() || role.isEmpty() || uniqueFeature.isEmpty() || dobInput.getText().toString().isEmpty()) {
                     Snackbar.make(submitBtn, "Missing fields please fulfilled", Snackbar.LENGTH_SHORT).setAnchorView(submitBtn).show();
                 } else {
-//                    NavigationUtil.hideSoftKeyboard(this);
                     if (isUpdate) {
                         person.setFirstName(fName.trim());
                         person.setLastName(lname.trim());

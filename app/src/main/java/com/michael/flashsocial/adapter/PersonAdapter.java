@@ -11,21 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.android.material.snackbar.Snackbar;
 import com.michael.flashsocial.R;
 import com.michael.flashsocial.custom_rule.IClickCallback;
-import com.michael.flashsocial.database.PersonDB;
-import com.michael.flashsocial.utils.DataConverter;
 import com.michael.flashsocial.model.Person;
+import com.michael.flashsocial.utils.DataConverter;
 
 import java.util.List;
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ItemHolder> {
     private List<Person> personList;
-    private IClickCallback cardClickCallback;
-    private IClickCallback btnClickCallback;
+    private final IClickCallback cardClickCallback;
+    private final IClickCallback btnClickCallback;
     private IClickCallback delClickCallback;
-    private boolean showBtn;
+    private final boolean showBtn;
 
 
     public PersonAdapter(List<Person> personList, IClickCallback cardClickCallback, IClickCallback btnClickCallback, IClickCallback delClickCallback) {
@@ -53,9 +51,10 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ItemHolder
         notifyItemChanged(pos, person);
     }
 
-    public void setData(int pos) {
+    public void setData(Person person) {
+        int pos = personList.indexOf(person);
+        personList.remove(person);
         notifyItemRemoved(pos);
-        personList.remove(pos);
     }
 
     @NonNull

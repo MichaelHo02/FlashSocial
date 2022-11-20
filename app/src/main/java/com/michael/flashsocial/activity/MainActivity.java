@@ -1,12 +1,11 @@
 package com.michael.flashsocial.activity;
 
-import androidx.annotation.IdRes;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
-
-import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.navigation.NavigationBarView;
@@ -19,9 +18,9 @@ import com.michael.flashsocial.utils.NavigationUtil;
 
 public class MainActivity extends AppCompatActivity implements CycleRule {
     private NavigationBarView nbv;
-    private final HomeFragment homeFragment = HomeFragment.newInstance("a", "b");
-    private final LearningFragment learningFragment = LearningFragment.newInstance("a", "b");
-    private final StatFragment statFragment = StatFragment.newInstance("a", "b");
+    private final HomeFragment homeFragment = HomeFragment.newInstance();
+    private final LearningFragment learningFragment = LearningFragment.newInstance();
+    private final StatFragment statFragment = StatFragment.newInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

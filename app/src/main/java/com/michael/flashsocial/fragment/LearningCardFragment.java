@@ -1,10 +1,6 @@
 package com.michael.flashsocial.fragment;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,10 +8,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.android.material.card.MaterialCardView;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 import com.michael.flashsocial.R;
@@ -25,11 +21,6 @@ import com.michael.flashsocial.utils.DataConverter;
 
 import java.text.SimpleDateFormat;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LearningCardFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LearningCardFragment extends Fragment implements CycleRule {
 
 
@@ -60,8 +51,7 @@ public class LearningCardFragment extends Fragment implements CycleRule {
     MaterialTextView roleView;
     MaterialTextView uniqueFeatureView;
 
-    public LearningCardFragment() {
-    }
+    public LearningCardFragment() {}
 
     public static LearningCardFragment newInstance(int param1, String param2, String param3, Person param4) {
         LearningCardFragment fragment = new LearningCardFragment();
@@ -119,7 +109,6 @@ public class LearningCardFragment extends Fragment implements CycleRule {
     @Override
     public void initUIAction() {
         overlayView.setOnTouchListener(this::handleOnTouchCard);
-
         avtFront.setImageBitmap(DataConverter.convertByteArrToBitmap(mParam4.getAvatar()));
         iconFront.setImageResource(mParam1);
         promptView.setText(mParam2);

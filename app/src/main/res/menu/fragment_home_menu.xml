@@ -11,6 +11,6 @@
     <item
         android:id="@+id/frag_home_del_all"
         android:icon="@drawable/ic_baseline_delete_24"
-        android:title="Delete All"
+        android:title="@string/delete_all"
         app:iconTint="?attr/colorOnSurface" />
 </menu>
