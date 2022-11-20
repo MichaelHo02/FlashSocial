@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity implements CycleRule {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DynamicColors.applyToActivitiesIfAvailable(this.getApplication());
-
         initUI();
         initUIAction();
     }
